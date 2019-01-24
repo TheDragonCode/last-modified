@@ -3,12 +3,7 @@
     "description": "Setting the response code 304 Not Modified in the absence of content changes.",
     "type": "library",
     "license": "MIT",
-    "keywords": [
-        "last modified",
-        "not modified",
-        "304 http code",
-        "headers"
-    ],
+    "keywords": ["last modified", "not modified", "304 http code", "headers"],
     "authors": [
         {
             "name": "Andrey Helldar",

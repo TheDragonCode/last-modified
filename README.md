@@ -4,7 +4,7 @@ Setting the response code 304 Not Modified in the absence of content changes.
 
 
 <p align="center">
-    <a href="https://styleci.io/repos/119022335"><img src="https://styleci.io/repos/119022335/shield" alt="StyleCI" /></a>
+    <a href="https://styleci.io/repos/167387916"><img src="https://styleci.io/repos/167387916/shield" alt="StyleCI" /></a>
     <a href="https://packagist.org/packages/andrey-helldar/last-modified"><img src="https://img.shields.io/packagist/dt/andrey-helldar/last-modified.svg?style=flat-square" alt="Total Downloads" /></a>
     <a href="https://packagist.org/packages/andrey-helldar/last-modified"><img src="https://poser.pugx.org/andrey-helldar/last-modified/v/stable?format=flat-square" alt="Latest Stable Version" /></a>
     <a href="https://packagist.org/packages/andrey-helldar/last-modified"><img src="https://poser.pugx.org/andrey-helldar/last-modified/v/unstable?format=flat-square" alt="Latest Unstable Version" /></a>
