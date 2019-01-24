@@ -12,7 +12,7 @@ class CreateLastModifiedTable extends Migration
     {
         Schema::create($this->table, function (Blueprint $table) {
             $table->string('key')->unique();
-            
+
             $table->timestamp('updated_at');
         });
     }
