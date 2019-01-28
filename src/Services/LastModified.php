@@ -10,8 +10,9 @@ class LastModified
     /**
      * @param \Illuminate\Database\Eloquent\Collection ...$collections
      *
-     * @return $this
      * @throws \Helldar\LastModified\Exceptions\UrlNotFoundException
+     *
+     * @return $this
      */
     public function collections(Collection ...$collections)
     {
@@ -28,8 +29,9 @@ class LastModified
     /**
      * @param mixed ...$models
      *
-     * @return $this
      * @throws \Helldar\LastModified\Exceptions\UrlNotFoundException
+     *
+     * @return $this
      */
     public function models(...$models)
     {
