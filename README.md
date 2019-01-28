@@ -74,12 +74,12 @@ To add records to the table, it is recommended to create a console command in yo
 use Helldar\LastModified\Services\LastModified;
 
 public function handle() {
-    $builder_1 = Foo::whereIsActive(true);
-    $builder_2 = Bar::where('id', '>', 50);
-    $builder_3 = Baz::query();
+    $model_1 = Foo::whereIsActive(true)->get();
+    $model_2 = Bar::where('id', '>', 50)->get();
+    $model_3 = Baz::query()->get();
     
     (new LastModified)
-        ->builders($builder_1, $builder_2, $builder_3);
+        ->models($model_1, $model_2, $model_3);
 }
 ```
 

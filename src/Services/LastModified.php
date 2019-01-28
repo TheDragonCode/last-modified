@@ -2,23 +2,22 @@
 
 namespace Helldar\LastModified\Services;
 
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Collection;
 
 class LastModified
 {
-    public function builders(Builder ...$builder)
+    public function models(Collection ...$models)
     {
-        foreach ((array) $builder as $item) {
+        foreach ((array) $models as $item) {
             $this->process($item);
         }
 
         return $this;
     }
 
-    private function process(Builder $builder)
+    private function process(Collection $model)
     {
-        $builder
-            ->get()
+        $model
             ->each(function ($item) {
                 $updated_at = $item->updated_at ?? null;
 
