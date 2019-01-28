@@ -25,7 +25,7 @@ Instead, you may of course manually update your require block and run `composer 
 ```json
 {
     "require": {
-        "andrey-helldar/last-modified": "^1.1"
+        "andrey-helldar/last-modified": "^1.2"
     }
 }
 ```
@@ -72,6 +72,7 @@ The system works like this: when opening a page, the middleware checks if there 
 To add records to the table, it is recommended to create a console command in your application using the following example:
 ```php
 use Helldar\LastModified\Services\LastModified;
+use Helldar\LastModified\Services\Item;
 
 public function handle() {
     $collection_1 = Foo::whereIsActive(true)->get();
@@ -82,9 +83,14 @@ public function handle() {
     $model_2 = Bar::where('id', '>', 50)->first();
     $model_3 = Baz::query()->first();
     
+    $item_1 = new Item('http://example.com/foo', Carbon::now());
+    $item_2 = new Item('http://example.com/bar', Carbon::parse('2018-03-02'));
+    $item_3 = new Item('http://example.com/baz');
+    
     (new LastModified)
         ->collections($collection_1, $collection_2, $collection_3)
-        ->models($model_1, $model_2, $model_3);
+        ->models($model_1, $model_2, $model_3)
+        ->manuals($item_1, $item_2, $item_3);
 }
 ```
 

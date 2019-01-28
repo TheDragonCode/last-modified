@@ -41,6 +41,16 @@ class LastModified
     }
 
     /**
+     * @param \Helldar\LastModified\Services\Item ...$items
+     */
+    public function manuals(Item ...$items)
+    {
+        foreach ((array) $items as $item) {
+            $this->updateOrCreate($item->url, $item->updated_at);
+        }
+    }
+
+    /**
      * @param \Illuminate\Database\Eloquent\Model $model
      *
      * @throws \Helldar\LastModified\Exceptions\UrlNotFoundException
@@ -53,14 +63,14 @@ class LastModified
 
         $updated_at = $model->updated_at ?? null;
 
-        $this->store($model->url, $updated_at);
+        $this->updateOrCreate($model->url, $updated_at);
     }
 
     /**
      * @param string $url
      * @param \DateTimeInterface $updated_at
      */
-    private function store(string $url, \DateTimeInterface $updated_at)
+    private function updateOrCreate(string $url, \DateTimeInterface $updated_at)
     {
         (new Check)->updateOrCreate($url, $updated_at);
     }
