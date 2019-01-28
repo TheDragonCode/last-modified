@@ -74,16 +74,21 @@ To add records to the table, it is recommended to create a console command in yo
 use Helldar\LastModified\Services\LastModified;
 
 public function handle() {
-    $model_1 = Foo::whereIsActive(true)->get();
-    $model_2 = Bar::where('id', '>', 50)->get();
-    $model_3 = Baz::query()->get();
+    $collection_1 = Foo::whereIsActive(true)->get();
+    $collection_2 = Bar::where('id', '>', 50)->get();
+    $collection_3 = Baz::query()->get();
+    
+    $model_1 = Foo::whereIsActive(true)->first();
+    $model_2 = Bar::where('id', '>', 50)->first();
+    $model_3 = Baz::query()->first();
     
     (new LastModified)
+        ->collections($collection_1, $collection_2, $collection_3)
         ->models($model_1, $model_2, $model_3);
 }
 ```
 
-**IMPORTANT!** Attributes `url` and `updated_at` must be available for models.
+**IMPORTANT!** The `url` attribute must be available for models.
 
 If the model has no attribute `url`, it should be created.
 

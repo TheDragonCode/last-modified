@@ -6,23 +6,36 @@ use Illuminate\Database\Eloquent\Collection;
 
 class LastModified
 {
-    public function models(Collection ...$models)
+    public function collections(Collection ...$collections)
     {
-        foreach ((array) $models as $item) {
-            $this->process($item);
+        foreach ((array) $collections as $item) {
+            $this->processCollection($item);
         }
 
         return $this;
     }
 
-    private function process(Collection $model)
+    public function models(...$models)
     {
-        $model
-            ->each(function ($item) {
-                $updated_at = $item->updated_at ?? null;
+        foreach ((array) $models as $model) {
+            $this->processModel($model);
+        }
 
-                $this->store($item->url, $updated_at);
-            });
+        return $this;
+    }
+
+    private function processCollection(Collection $model)
+    {
+        $model->each(function ($item) {
+            $this->processModel($item);
+        });
+    }
+
+    private function processModel($model)
+    {
+        $updated_at = $model->updated_at ?? null;
+
+        $this->store($model->url, $updated_at);
     }
 
     private function store(string $url, \DateTimeInterface $updated_at)
