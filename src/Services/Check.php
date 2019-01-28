@@ -63,6 +63,15 @@ class Check
             ->updateOrInsert(compact('key'), compact('updated_at'));
     }
 
+    public function delete(string $url)
+    {
+        $key = md5(trim($url));
+
+        $this->db()
+            ->where('url', $key)
+            ->delete();
+    }
+
     private function db(): Builder
     {
         return DB::connection($this->db_connection)

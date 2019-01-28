@@ -70,6 +70,8 @@ protected $middlewareGroups = [
 The system works like this: when opening a page, the middleware checks if there is an entry in the database table about this link. If there is, it checks the `Last-Modified` header key and returns either 200 or 304 code.
 
 To add records to the table, it is recommended to create a console command in your application using the following example:
+
+##### For creating/updating items:
 ```php
 use Helldar\LastModified\Services\LastModified;
 use Helldar\LastModified\Services\Item;
@@ -90,7 +92,31 @@ public function handle() {
     (new LastModified)
         ->collections($collection_1, $collection_2, $collection_3)
         ->models($model_1, $model_2, $model_3)
-        ->manuals($item_1, $item_2, $item_3);
+        ->manuals($item_1, $item_2, $item_3)
+        ->update();
+}
+```
+
+##### For deleting items:
+```php
+use Helldar\LastModified\Services\LastModified;
+use Helldar\LastModified\Services\Item;
+
+public function handle() {    
+    $collection_1 = Foo::whereIsActive(false)->get();
+    $collection_2 = Bar::whereIn('id', [50, 60, 62, 73])->get();
+    
+    $model_1 = Foo::whereIsActive(false)->first();
+    $model_2 = Bar::whereIn('id', [50, 60, 62, 73])->first();
+    
+    $item_1 = new Item('http://example.com/foo');
+    $item_2 = new Item('http://example.com/bar');
+    
+    (new LastModified)
+        ->collections($collection_1, $collection_2, $collection_3)
+        ->models($model_1, $model_2, $model_3)
+        ->manuals($item_1, $item_2, $item_3)
+        ->delete();
 }
 ```
 

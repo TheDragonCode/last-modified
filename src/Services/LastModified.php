@@ -7,48 +7,67 @@ use Illuminate\Database\Eloquent\Collection;
 
 class LastModified
 {
-    /**
-     * @param \Illuminate\Database\Eloquent\Collection ...$collections
-     *
-     * @throws \Helldar\LastModified\Exceptions\UrlNotFoundException
-     *
-     * @return $this
-     */
+    private $collections = [];
+
+    private $models = [];
+
+    private $manuals = [];
+
     public function collections(Collection ...$collections)
     {
-        foreach ((array) $collections as $collection) {
-            $collection
-                ->each(function ($model) {
-                    $this->models($model);
-                });
-        }
+        $this->collections = (array) $collections;
 
         return $this;
     }
 
-    /**
-     * @param mixed ...$models
-     *
-     * @throws \Helldar\LastModified\Exceptions\UrlNotFoundException
-     *
-     * @return $this
-     */
     public function models(...$models)
     {
-        foreach ((array) $models as $model) {
-            $this->process($model);
-        }
+        $this->models = (array) $models;
+
+        return $this;
+    }
+
+    public function manuals(Item ...$items)
+    {
+        $this->models = (array) $items;
 
         return $this;
     }
 
     /**
-     * @param \Helldar\LastModified\Services\Item ...$items
+     * @throws \Helldar\LastModified\Exceptions\UrlNotFoundException
      */
-    public function manuals(Item ...$items)
+    public function update()
     {
-        foreach ((array) $items as $item) {
+        foreach ($this->collections as $collection) {
+            $collection->each(function ($model) {
+                $this->store($model);
+            });
+        }
+
+        foreach ($this->models as $model) {
+            $this->store($model);
+        }
+
+        foreach ($this->manuals as $item) {
             $this->updateOrCreate($item->url, $item->updated_at);
+        }
+    }
+
+    public function delete()
+    {
+        foreach ($this->collections as $collection) {
+            $collection->each(function ($model) {
+                $this->deleteFromTable($model->url);
+            });
+        }
+
+        foreach ($this->models as $model) {
+            $this->deleteFromTable($model->url);
+        }
+
+        foreach ($this->manuals as $item) {
+            $this->deleteFromTable($item->url);
         }
     }
 
@@ -57,7 +76,7 @@ class LastModified
      *
      * @throws \Helldar\LastModified\Exceptions\UrlNotFoundException
      */
-    private function process($model)
+    private function store($model)
     {
         if (!isset($model->url)) {
             throw new UrlNotFoundException($model);
@@ -68,12 +87,13 @@ class LastModified
         $this->updateOrCreate($model->url, $updated_at);
     }
 
-    /**
-     * @param string $url
-     * @param \DateTimeInterface $updated_at
-     */
     private function updateOrCreate(string $url, \DateTimeInterface $updated_at)
     {
         (new Check)->updateOrCreate($url, $updated_at);
+    }
+
+    private function deleteFromTable(string $url)
+    {
+        (new Check)->delete($url);
     }
 }
