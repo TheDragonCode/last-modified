@@ -133,6 +133,7 @@ protected getUrlAttribute() {
 
 Using the console command is optional. You can also create, for example, events or observers to update the data in the table.
 
+See example in [gist](https://gist.github.com/andrey-helldar/7051619379a98c8335af15cc0fb5bf6f).
 
 ## Copyright and License
 
