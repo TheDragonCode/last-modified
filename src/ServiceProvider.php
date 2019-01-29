@@ -11,7 +11,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
 
         $this->publishes([
-            __DIR__ . '/config/last_modified.php' => config_path('config/last_modified.php'),
+            __DIR__ . '/config/last_modified.php' => config_path('last_modified.php'),
         ], 'config');
     }
 
