@@ -39,6 +39,10 @@ class LastModified
      */
     public function update()
     {
+        if ($this->isDisabled()) {
+            return;
+        }
+
         foreach ($this->collections as $collection) {
             $collection->each(function ($model) {
                 $this->store($model);
@@ -56,6 +60,10 @@ class LastModified
 
     public function delete()
     {
+        if ($this->isDisabled()) {
+            return;
+        }
+
         foreach ($this->collections as $collection) {
             $collection->each(function ($model) {
                 $this->deleteFromTable($model->url);
@@ -95,5 +103,10 @@ class LastModified
     private function deleteFromTable(string $url)
     {
         (new Check)->delete($url);
+    }
+
+    private function isDisabled(): bool
+    {
+        return !config('last_modified.enabled');
     }
 }

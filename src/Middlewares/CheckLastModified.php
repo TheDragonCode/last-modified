@@ -20,6 +20,10 @@ class CheckLastModified
         /** @var \Symfony\Component\HttpFoundation\Response $response */
         $response = $next($request);
 
+        if (!config('last_modified.enabled')) {
+            return $response;
+        }
+
         $service = new Check($request);
 
         if ($service->isNotModified()) {
