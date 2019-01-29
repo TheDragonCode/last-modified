@@ -54,7 +54,7 @@ class Check
             ->first();
     }
 
-    public function updateOrCreate(string $url, \DateTimeInterface $date): bool
+    public function updateOrCreate(string $url, \DateTimeInterface $date = null): bool
     {
         $key        = md5(trim($url));
         $updated_at = $date ?: Carbon::now();

@@ -95,7 +95,7 @@ class LastModified
         $this->updateOrCreate($model->url, $updated_at);
     }
 
-    private function updateOrCreate(string $url, \DateTimeInterface $updated_at)
+    private function updateOrCreate(string $url, \DateTimeInterface $updated_at = null)
     {
         (new Check)->updateOrCreate($url, $updated_at);
     }
