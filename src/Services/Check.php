@@ -23,10 +23,12 @@ class Check
 
     public function __construct(Request $request = null)
     {
-        $url       = $request->url();
-        $this->key = md5(trim($url));
+        if (!is_null($request)) {
+            $url       = $request->url();
+            $this->key = md5(trim($url));
 
-        $this->request = $request;
+            $this->request = $request;
+        }
 
         $this->db_connection = config('last_modified.connection');
     }
