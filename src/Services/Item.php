@@ -11,22 +11,22 @@ class Item
     public $url;
 
     /** @var \DateTimeInterface|null */
-    public $date;
+    public $updated_at;
 
     /**
      * Item constructor.
      *
      * @param string $url
-     * @param \DateTimeInterface|null $date
+     * @param \DateTimeInterface|null $updated_at
      *
      * @throws \Helldar\LastModified\Exceptions\IncorrectUrlValueException
      */
-    public function __construct(string $url, \DateTimeInterface $date = null)
+    public function __construct(string $url, \DateTimeInterface $updated_at = null)
     {
         $this->validateUrl($url);
 
-        $this->url  = $url;
-        $this->date = $date ?? null;
+        $this->url        = $url;
+        $this->updated_at = $updated_at ?: null;
     }
 
     /**
