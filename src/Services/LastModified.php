@@ -29,7 +29,7 @@ class LastModified
 
     public function manuals(Item ...$items)
     {
-        $this->models = (array) $items;
+        $this->manuals = (array) $items;
 
         return $this;
     }
