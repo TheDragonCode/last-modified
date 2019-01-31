@@ -74,7 +74,7 @@ To add records to the table, it is recommended to create a console command in yo
 ##### For creating/updating items:
 ```php
 use Helldar\LastModified\Services\LastModified;
-use Helldar\LastModified\Services\Item;
+use Helldar\LastModified\Services\LastItem;
 
 public function handle() {
     $collection_1 = Foo::whereIsActive(true)->get();
@@ -85,9 +85,9 @@ public function handle() {
     $model_2 = Bar::where('id', '>', 50)->first();
     $model_3 = Baz::query()->first();
     
-    $item_1 = new Item('http://example.com/foo', Carbon::now());
-    $item_2 = new Item('http://example.com/bar', Carbon::parse('2018-03-02'));
-    $item_3 = new Item('http://example.com/baz');
+    $item_1 = new LastItem('http://example.com/foo', Carbon::now());
+    $item_2 = new LastItem('http://example.com/bar', Carbon::parse('2018-03-02'));
+    $item_3 = new LastItem('http://example.com/baz');
     
     (new LastModified)
         ->collections($collection_1, $collection_2, $collection_3)
@@ -100,7 +100,7 @@ public function handle() {
 ##### For deleting items:
 ```php
 use Helldar\LastModified\Services\LastModified;
-use Helldar\LastModified\Services\Item;
+use Helldar\LastModified\Services\LastItem;
 
 public function handle() {    
     $collection_1 = Foo::whereIsActive(false)->get();
@@ -109,8 +109,8 @@ public function handle() {
     $model_1 = Foo::whereIsActive(false)->first();
     $model_2 = Bar::whereIn('id', [50, 60, 62, 73])->first();
     
-    $item_1 = new Item('http://example.com/foo');
-    $item_2 = new Item('http://example.com/bar');
+    $item_1 = new LastItem('http://example.com/foo');
+    $item_2 = new LastItem('http://example.com/bar');
     
     (new LastModified)
         ->collections($collection_1, $collection_2, $collection_3)
