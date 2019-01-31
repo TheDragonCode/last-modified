@@ -27,7 +27,7 @@ class LastModified
         return $this;
     }
 
-    public function manuals(Item ...$items)
+    public function manuals(LastItem ...$items)
     {
         $this->manuals = (array) $items;
 
