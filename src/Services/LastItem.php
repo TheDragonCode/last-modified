@@ -3,6 +3,7 @@
 namespace Helldar\LastModified\Services;
 
 use Helldar\LastModified\Exceptions\IncorrectUrlValueException;
+use Illuminate\Support\Facades\Validator;
 
 class LastItem
 {
@@ -33,10 +34,23 @@ class LastItem
      */
     private function validateUrl(string $url)
     {
-        $is_not_valid = filter_var($url, FILTER_VALIDATE_URL) === false;
+        $validator = Validator::make(compact('url'), $this->rules(), $this->messages($url));
 
-        if ($is_not_valid) {
-            throw new IncorrectUrlValueException('The URL attribute must be a valid URL: ' . $url);
+        if ($validator->fails()) {
+            throw new IncorrectUrlValueException($validator->errors()->first());
         }
+    }
+
+    private function rules(): array
+    {
+        return ['url' => 'required|url'];
+    }
+
+    private function messages(string $url = null)
+    {
+        return [
+            'url.required' => 'The URL field is required.',
+            'url.url'      => "URL \"{$url}\" is incorrect!",
+        ];
     }
 }
