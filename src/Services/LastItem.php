@@ -33,10 +33,10 @@ class LastItem
      */
     private function validateUrl(string $url)
     {
-        $is_url = filter_var($url, FILTER_VALIDATE_URL) !== false;
+        $is_not_valid = filter_var($url, FILTER_VALIDATE_URL) === false;
 
-        if ($is_url) {
-            throw new IncorrectUrlValueException('The URL attribute must be a valid URL.');
+        if ($is_not_valid) {
+            throw new IncorrectUrlValueException('The URL attribute must be a valid URL: ' . $url);
         }
     }
 }
