@@ -93,7 +93,7 @@ public function handle() {
         ->collections($collection_1, $collection_2, $collection_3)
         ->models($model_1, $model_2, $model_3)
         ->manuals($item_1, $item_2, $item_3)
-        ->update();
+        ->update(bool $force = false);
 }
 ```
 
@@ -116,7 +116,7 @@ public function handle() {
         ->collections($collection_1, $collection_2, $collection_3)
         ->models($model_1, $model_2, $model_3)
         ->manuals($item_1, $item_2, $item_3)
-        ->delete();
+        ->delete(bool $force = false);
 }
 ```
 

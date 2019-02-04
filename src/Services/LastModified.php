@@ -35,11 +35,13 @@ class LastModified
     }
 
     /**
+     * @param bool $force
+     *
      * @throws \Helldar\LastModified\Exceptions\UrlNotFoundException
      */
-    public function update()
+    public function update(bool $force = false)
     {
-        if ($this->isDisabled()) {
+        if ($this->isDisabled($force)) {
             return;
         }
 
@@ -58,9 +60,9 @@ class LastModified
         }
     }
 
-    public function delete()
+    public function delete(bool $force = false)
     {
-        if ($this->isDisabled()) {
+        if ($this->isDisabled($force)) {
             return;
         }
 
@@ -105,8 +107,8 @@ class LastModified
         (new Check)->delete($url);
     }
 
-    private function isDisabled(): bool
+    private function isDisabled(bool $force = false): bool
     {
-        return !config('last_modified.enabled');
+        return !$force && !config('last_modified.enabled');
     }
 }
