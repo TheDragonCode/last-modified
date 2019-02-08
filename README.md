@@ -135,6 +135,29 @@ Using the console command is optional. You can also create, for example, events 
 
 See example in [gist](https://gist.github.com/andrey-helldar/7051619379a98c8335af15cc0fb5bf6f).
 
+
+##### Absolute or relative URLs
+
+If your application is multi-domain, you can set page refresh labels without regard to the domain name.
+
+Example:
+
+when `absolute_url` is `true`:
+
+|url|md5|returned date|
+|---|---|---|
+|https://example1.com/foo/bar/baz|8b023041767447ece63485467a0eb3f2|2019-02-08 12:34:47|
+|https://example2.com/foo/bar/baz|e61e56084eba741df97ca6ea2c46c8f8|2018-03-15 01:67:17|
+
+when `absolute_url` is `false`:
+
+|url|md5|returned date|
+|---|---|---|
+|https://example1.com/foo/bar/baz|7c709be36bd82265bb0eb74a233f3040|2019-02-08 12:34:47|
+|https://example2.com/foo/bar/baz|7c709be36bd82265bb0eb74a233f3040|2019-02-08 12:34:47|
+
+By default, the package uses an absolute link.
+
 ## Copyright and License
 
 `Last Modified` package was written by Andrey Helldar for the Laravel framework 5.6 or above, and is released under the MIT License. See the [LICENSE](LICENSE) file for details.

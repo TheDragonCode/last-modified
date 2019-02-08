@@ -99,6 +99,8 @@ class LastModified
 
     private function updateOrCreate(string $url, \DateTimeInterface $updated_at = null)
     {
+        $url = $this->modifyUrl($url);
+
         (new Check)->updateOrCreate($url, $updated_at);
     }
 
@@ -110,5 +112,18 @@ class LastModified
     private function isDisabled(bool $force = false): bool
     {
         return !$force && !config('last_modified.enabled');
+    }
+
+    private function modifyUrl(string $url)
+    {
+        $absolute_url = config('last_modified.absolute_url', true);
+
+        if ($absolute_url) {
+            return $url;
+        }
+
+        $parsed = parse_url($url, PHP_URL_PATH);
+
+        return ltrim($parsed, '/');
     }
 }

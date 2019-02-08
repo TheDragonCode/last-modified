@@ -24,13 +24,13 @@ class Check
     public function __construct(Request $request = null)
     {
         if (!is_null($request)) {
-            $url       = $request->url();
+            $url       = $this->getUrl();
             $this->key = md5(trim($url));
 
             $this->request = $request;
         }
 
-        $this->db_connection = config('last_modified.connection');
+        $this->db_connection = config('last_modified.connection', 'mysql');
     }
 
     public function isNotModified(): bool
@@ -78,5 +78,12 @@ class Check
     {
         return DB::connection($this->db_connection)
             ->table($this->table_name);
+    }
+
+    private function getUrl(): string
+    {
+        $absolute_url = config('last_modified.absolute_url', true);
+
+        return $absolute_url ? $this->request->url() : $this->request->path();
     }
 }
