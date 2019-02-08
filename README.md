@@ -52,9 +52,6 @@ or update `providers` section in your `config/app.php` file:
 
 And call `php artisan vendor:publish --provider="Helldar\LastModified\ServiceProvider"` command, and `php artisan migrate` to create table in database.
 
-In the configuration file, you can specify the name of the connection.
-
-
 Next, add middleware in `$middlewareGroups > web` section in `app/Http/Kernel.php` file:
 ```php
 

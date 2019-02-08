@@ -10,9 +10,6 @@ use Illuminate\Support\Facades\DB;
 class Check
 {
     /** @var string */
-    private $db_connection;
-
-    /** @var string */
     private $table_name = 'last_modified';
 
     /** @var \Illuminate\Http\Request */
@@ -29,8 +26,6 @@ class Check
 
             $this->request = $request;
         }
-
-        $this->db_connection = config('last_modified.connection', 'mysql');
     }
 
     public function isNotModified(): bool
@@ -76,8 +71,7 @@ class Check
 
     private function db(): Builder
     {
-        return DB::connection($this->db_connection)
-            ->table($this->table_name);
+        return DB::table($this->table_name);
     }
 
     private function getUrl(): string
