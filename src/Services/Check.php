@@ -21,8 +21,7 @@ class Check
     public function __construct(Request $request = null)
     {
         if (!is_null($request)) {
-            $url       = $this->getUrl();
-            $this->key = md5(trim($url));
+            $this->setUrlKey($request);
 
             $this->request = $request;
         }
@@ -74,10 +73,12 @@ class Check
         return DB::table($this->table_name);
     }
 
-    private function getUrl(): string
+    private function setUrlKey(Request $request)
     {
         $absolute_url = config('last_modified.absolute_url', true);
 
-        return $absolute_url ? $this->request->url() : $this->request->path();
+        $url = $absolute_url ? $request->url() : $request->path();
+
+        $this->key = md5(trim($url));
     }
 }
