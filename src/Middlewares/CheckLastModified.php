@@ -26,7 +26,7 @@ class CheckLastModified
         if ($service->isNotModified()) {
             return response(null, 304);
         }
-        
+
         /** @var \Symfony\Component\HttpFoundation\Response $response */
         $response = $next($request);
 
