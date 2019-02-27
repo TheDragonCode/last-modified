@@ -124,6 +124,6 @@ class LastModified
 
         $parsed = parse_url($url, PHP_URL_PATH);
 
-        return ltrim($parsed, '/');
+        return is_null($parsed) ? '/' : ltrim($parsed, '/');
     }
 }
