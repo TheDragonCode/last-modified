@@ -52,7 +52,7 @@ class Check
 
     public function updateOrCreate(string $url, \DateTimeInterface $date = null): bool
     {
-        $key        = \md5(\trim($url));
+        $key        = $this->hash($url);
         $updated_at = $date ?: Carbon::now();
 
         return $this->db()
@@ -61,10 +61,8 @@ class Check
 
     public function delete(string $url)
     {
-        $key = \md5(\trim($url));
-
         $this->db()
-            ->where('key', $key)
+            ->where('key', $this->hash($url))
             ->delete();
     }
 
@@ -79,6 +77,11 @@ class Check
 
         $url = $absolute_url ? $request->url() : $request->path();
 
-        $this->key = \md5(\trim($url));
+        $this->key = $this->hash($url);
+    }
+
+    private function hash(string $value)
+    {
+        return \md5(\trim($value));
     }
 }
