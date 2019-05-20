@@ -111,19 +111,19 @@ class LastModified
 
     private function isDisabled(bool $force = false): bool
     {
-        return !$force && !config('last_modified.enabled');
+        return !$force && !\config('last_modified.enabled');
     }
 
     private function modifyUrl(string $url)
     {
-        $absolute_url = config('last_modified.absolute_url', true);
+        $absolute_url = \config('last_modified.absolute_url', true);
 
         if ($absolute_url) {
             return $url;
         }
 
-        $parsed = parse_url($url, PHP_URL_PATH);
+        $parsed = \parse_url($url, PHP_URL_PATH);
 
-        return is_null($parsed) ? '/' : ltrim($parsed, '/');
+        return \is_null($parsed) ? '/' : \ltrim($parsed, '/');
     }
 }

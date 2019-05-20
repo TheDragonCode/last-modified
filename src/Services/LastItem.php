@@ -34,7 +34,7 @@ class LastItem
      */
     private function validateUrl(string $url)
     {
-        $validator = Validator::make(compact('url'), $this->rules(), $this->messages($url));
+        $validator = Validator::make(\compact('url'), $this->rules(), $this->messages($url));
 
         if ($validator->fails()) {
             throw new IncorrectUrlValueException($validator->errors()->first());

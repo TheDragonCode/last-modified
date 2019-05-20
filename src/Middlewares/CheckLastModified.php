@@ -17,14 +17,14 @@ class CheckLastModified
      */
     public function handle($request, Closure $next)
     {
-        if (!config('last_modified.enabled')) {
+        if (!\config('last_modified.enabled')) {
             return $next($request);
         }
 
         $service = new Check($request);
 
         if ($service->isNotModified()) {
-            return response(null, 304);
+            return \response(null, 304);
         }
 
         /** @var \Symfony\Component\HttpFoundation\Response $response */
