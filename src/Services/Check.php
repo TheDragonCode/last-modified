@@ -64,7 +64,7 @@ class Check
         $key = \md5(\trim($url));
 
         $this->db()
-            ->where('url', $key)
+            ->where('key', $key)
             ->delete();
     }
 
