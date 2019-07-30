@@ -2,12 +2,16 @@
 
 namespace Helldar\LastModified\Services;
 
+use Helldar\LastModified\Exceptions\IncorrectBuilderTypeException;
 use Helldar\LastModified\Exceptions\UrlNotFoundException;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
 class LastModified
 {
     private $collections = [];
+
+    private $builders = [];
 
     private $models = [];
 
@@ -16,6 +20,13 @@ class LastModified
     public function collections(Collection ...$collections)
     {
         $this->collections = (array) $collections;
+
+        return $this;
+    }
+
+    public function builders(...$builders)
+    {
+        $this->builders = (array) $builders;
 
         return $this;
     }
@@ -49,6 +60,18 @@ class LastModified
             $collection->each(function ($model) {
                 $this->store($model);
             });
+        }
+
+        foreach ($this->builders as $builder) {
+            if ($builder instanceof Builder) {
+                $builder
+                    ->get()
+                    ->each(function ($item) {
+                        $this->store($item);
+                    });
+            } else {
+                throw new IncorrectBuilderTypeException(\get_class($builder));
+            }
         }
 
         foreach ($this->models as $model) {

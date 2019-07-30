@@ -77,6 +77,10 @@ public function handle() {
     $collection_1 = Foo::whereIsActive(true)->get();
     $collection_2 = Bar::where('id', '>', 50)->get();
     $collection_3 = Baz::query()->get();
+
+    $builder_1 = Foo::whereIsActive(true);
+    $builder_2 = Bar::where('id', '>', 50);
+    $builder_3 = Baz::query();
     
     $model_1 = Foo::whereIsActive(true)->first();
     $model_2 = Bar::where('id', '>', 50)->first();
@@ -88,6 +92,7 @@ public function handle() {
     
     (new LastModified)
         ->collections($collection_1, $collection_2, $collection_3)
+        ->builders($builder_1, $builder_2, $builder_3)
         ->models($model_1, $model_2, $model_3)
         ->manuals($item_1, $item_2, $item_3)
         ->update(bool $force = false);
@@ -102,6 +107,10 @@ use Helldar\LastModified\Services\LastItem;
 public function handle() {    
     $collection_1 = Foo::whereIsActive(false)->get();
     $collection_2 = Bar::whereIn('id', [50, 60, 62, 73])->get();
+
+    $builder_1 = Foo::whereIsActive(true);
+    $builder_2 = Bar::where('id', '>', 50);
+    $builder_3 = Baz::query();
     
     $model_1 = Foo::whereIsActive(false)->first();
     $model_2 = Bar::whereIn('id', [50, 60, 62, 73])->first();
@@ -111,6 +120,7 @@ public function handle() {
     
     (new LastModified)
         ->collections($collection_1, $collection_2, $collection_3)
+        ->builders($builder_1, $builder_2, $builder_3)
         ->models($model_1, $model_2, $model_3)
         ->manuals($item_1, $item_2, $item_3)
         ->delete(bool $force = false);
