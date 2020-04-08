@@ -124,12 +124,12 @@ class LastModified
     {
         $url = $this->modifyUrl($url);
 
-        (new Check)->updateOrCreate($url, $updated_at);
+        (new Check())->updateOrCreate($url, $updated_at);
     }
 
     private function deleteFromTable(string $url)
     {
-        (new Check)->delete($url);
+        (new Check())->delete($url);
     }
 
     private function isDisabled(bool $force = false): bool
