@@ -1,6 +1,6 @@
 <?php
 
-namespace Helldar\LastModified;
+namespace Helldar\LastModified\Middlewares;
 
 use Closure;
 use Helldar\LastModified\Services\Check;

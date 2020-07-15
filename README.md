@@ -57,7 +57,7 @@ Next, add middleware in `$middlewareGroups > web` section in `app/Http/Kernel.ph
 
 protected $middlewareGroups = [
     'web' => [
-        Helldar\LastModified\CheckLastModified::class,
+         \Helldar\LastModified\Middlewares\CheckLastModified::class,
     ]
 ]
 ```
