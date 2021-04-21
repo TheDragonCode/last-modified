@@ -165,6 +165,13 @@ when `absolute_url` is `false`:
 
 By default, the package uses an absolute link.
 
-## Copyright and License
+## License
 
-`Last Modified` package was written by Andrey Helldar for the Laravel framework 5.6 or above, and is released under the MIT License. See the [LICENSE](LICENSE) file for details.
+This package is licensed under the [MIT License](LICENSE).
+
+
+## For Enterprise
+
+Available as part of the Tidelift Subscription.
+
+The maintainers of `andrey-helldar/laravel-support` and thousands of other packages are working with Tidelift to deliver commercial support and maintenance for the open source packages you use to build your applications. Save time, reduce risk, and improve code health, while paying the maintainers of the exact packages you use. [Learn more](https://tidelift.com/subscription/pkg/packagist-andrey-helldar-laravel-support?utm_source=packagist-andrey-helldar-laravel-support&utm_medium=referral&utm_campaign=enterprise&utm_term=repo).
