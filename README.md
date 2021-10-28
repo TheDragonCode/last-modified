@@ -1,7 +1,8 @@
 ## Last Modified
 
-Setting the response code 304 Not Modified in the absence of content changes.
+<img src="https://preview.dragon-code.pro/TheDragonCode/last-modified.svg?brand=laravel" width="100%" height="320" alt="Laravel Last Modified"/>
 
+Setting the response code 304 Not Modified in the absence of content changes.
 
 <p align="center">
     <a href="https://styleci.io/repos/167387916"><img src="https://styleci.io/repos/167387916/shield" alt="StyleCI" /></a>
