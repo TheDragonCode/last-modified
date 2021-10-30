@@ -164,6 +164,7 @@ when `absolute_url` is `false`:
 |---|---|---|
 |https://example1.com/foo/bar/baz|7c709be36bd82265bb0eb74a233f3040|2019-02-08 12:34:47|
 |https://example2.com/foo/bar/baz|7c709be36bd82265bb0eb74a233f3040|2019-02-08 12:34:47|
+|https://example3.com/foo/bar/baz?id=1|7c709be36bd82265bb0eb74a233f3040|2019-02-08 12:34:47|
 
 By default, the package uses an absolute link.
 
