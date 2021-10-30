@@ -75,7 +75,7 @@ class Check
     {
         $absolute_url = \config('last_modified.absolute_url', true);
 
-        $url = $absolute_url ? $request->url() : $request->path();
+        $url = $absolute_url ? $request->fullUrl() : $request->path();
 
         $this->key = $this->hash($url);
     }
