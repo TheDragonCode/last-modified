@@ -89,7 +89,7 @@ public function handle() {
     
     $item_1 = new LastItem('http://example.com/foo', Carbon::now());
     $item_2 = new LastItem('http://example.com/bar', Carbon::parse('2018-03-02'));
-    $item_3 = new LastItem('http://example.com/baz');
+    $item_3 = new LastItem('http://example.com/baz?id=1');
     
     (new LastModified)
         ->collections($collection_1, $collection_2, $collection_3)
@@ -155,7 +155,8 @@ when `absolute_url` is `true`:
 |url|md5|returned date|
 |---|---|---|
 |https://example1.com/foo/bar/baz|8b023041767447ece63485467a0eb3f2|2019-02-08 12:34:47|
-|https://example2.com/foo/bar/baz|e61e56084eba741df97ca6ea2c46c8f8|2018-03-15 01:67:17|
+|https://example2.com/foo/bar/baz|e61e56084eba741df97ca6ea2c46c8f8|2018-03-15 01:47:17|
+|https://example2.com/foo/bar/baz?id=1|d3990842ce7cafd30780d285eef3baf9|2021-10-31 01:28:17|
 
 when `absolute_url` is `false`:
 
