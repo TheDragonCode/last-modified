@@ -2,6 +2,7 @@
 
 namespace Helldar\LastModified\Services;
 
+use DateTimeInterface;
 use Helldar\LastModified\Exceptions\IncorrectUrlValueException;
 use Illuminate\Support\Facades\Validator;
 
@@ -14,12 +15,12 @@ class LastItem
     public $updated_at;
 
     /**
-     * @param string $url
-     * @param \DateTimeInterface|null $updated_at
+     * @param  string  $url
+     * @param  \DateTimeInterface|null  $updated_at
      *
      * @throws \Helldar\LastModified\Exceptions\IncorrectUrlValueException
      */
-    public function __construct(string $url, \DateTimeInterface $updated_at = null)
+    public function __construct(string $url, DateTimeInterface $updated_at = null)
     {
         $this->validateUrl($url);
 
@@ -28,13 +29,13 @@ class LastItem
     }
 
     /**
-     * @param string $url
+     * @param  string  $url
      *
      * @throws \Helldar\LastModified\Exceptions\IncorrectUrlValueException
      */
     private function validateUrl(string $url)
     {
-        $validator = Validator::make(\compact('url'), $this->rules(), $this->messages($url));
+        $validator = Validator::make(compact('url'), $this->rules(), $this->messages($url));
 
         if ($validator->fails()) {
             throw new IncorrectUrlValueException($validator->errors()->first());

@@ -2,6 +2,7 @@
 
 namespace Helldar\LastModified\Services;
 
+use DateTimeInterface;
 use Helldar\LastModified\Exceptions\IncorrectBuilderTypeException;
 use Helldar\LastModified\Exceptions\UrlNotFoundException;
 use Illuminate\Database\Eloquent\Builder;
@@ -46,7 +47,7 @@ class LastModified
     }
 
     /**
-     * @param bool $force
+     * @param  bool  $force
      *
      * @throws \Helldar\LastModified\Exceptions\UrlNotFoundException
      */
@@ -70,7 +71,7 @@ class LastModified
                         $this->store($item);
                     });
             } else {
-                throw new IncorrectBuilderTypeException(\get_class($builder));
+                throw new IncorrectBuilderTypeException(get_class($builder));
             }
         }
 
@@ -105,13 +106,13 @@ class LastModified
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param  \Illuminate\Database\Eloquent\Model  $model
      *
      * @throws \Helldar\LastModified\Exceptions\UrlNotFoundException
      */
     private function store($model)
     {
-        if (!isset($model->url)) {
+        if (! isset($model->url)) {
             throw new UrlNotFoundException($model);
         }
 
@@ -120,7 +121,7 @@ class LastModified
         $this->updateOrCreate($model->url, $updated_at);
     }
 
-    private function updateOrCreate(string $url, \DateTimeInterface $updated_at = null)
+    private function updateOrCreate(string $url, DateTimeInterface $updated_at = null)
     {
         $url = $this->modifyUrl($url);
 
@@ -134,19 +135,19 @@ class LastModified
 
     private function isDisabled(bool $force = false): bool
     {
-        return !$force && !\config('last_modified.enabled');
+        return ! $force && ! config('last_modified.enabled');
     }
 
     private function modifyUrl(string $url)
     {
-        $absolute_url = \config('last_modified.absolute_url', true);
+        $absolute_url = config('last_modified.absolute_url', true);
 
         if ($absolute_url) {
             return $url;
         }
 
-        $parsed = \parse_url($url, PHP_URL_PATH);
+        $parsed = parse_url($url, PHP_URL_PATH);
 
-        return \is_null($parsed) ? '/' : \ltrim($parsed, '/');
+        return is_null($parsed) ? '/' : ltrim($parsed, '/');
     }
 }

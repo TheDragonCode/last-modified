@@ -2,16 +2,16 @@
 
 namespace Helldar\LastModified;
 
-class ServiceProvider extends \Illuminate\Support\ServiceProvider
-{
-    protected $defer = false;
+use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
+class ServiceProvider extends BaseServiceProvider
+{
     public function boot()
     {
         $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
 
         $this->publishes([
-            __DIR__ . '/config/last_modified.php' => \config_path('last_modified.php'),
+            __DIR__ . '/config/last_modified.php' => config_path('last_modified.php'),
         ], 'config');
     }
 
