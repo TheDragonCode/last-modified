@@ -47,11 +47,11 @@ class LastItem
         return ['url' => 'required|url'];
     }
 
-    private function messages(string $url = null)
+    private function messages(string $url = null): array
     {
         return [
             'url.required' => 'The URL field is required.',
-            'url.url'      => "URL \"{$url}\" is incorrect!",
+            'url.url'      => "URL \"$url\" is incorrect!",
         ];
     }
 }

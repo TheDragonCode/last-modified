@@ -52,7 +52,7 @@ class Check
 
         Model::query()->updateOrCreate(
             compact('key'),
-            compact('updated_at')
+            compact('url', 'updated_at')
         );
     }
 
