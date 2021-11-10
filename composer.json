@@ -1,5 +1,5 @@
 {
-    "name": "andrey-helldar/last-modified",
+    "name": "dragon-code/last-modified",
     "description": "Setting the response code 304 Not Modified in the absence of content changes.",
     "type": "library",
     "license": "MIT",
@@ -11,8 +11,8 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/andrey-helldar/last-modified/issues",
-        "source": "https://github.com/andrey-helldar/last-modified"
+        "issues": "https://github.com/TheDragonCode/last-modified/issues",
+        "source": "https://github.com/TheDragonCode/last-modified"
     },
     "suggest": {
         "symfony/thanks": "Give thanks (in the form of a GitHub) to your fellow PHP package maintainers"
