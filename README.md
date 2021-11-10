@@ -25,7 +25,7 @@ Instead, you may of course manually update your require block and run `composer 
 ```json
 {
     "require": {
-        "andrey-helldar/last-modified": "^1.3"
+        "andrey-helldar/last-modified": "^1.8"
     }
 }
 ```
@@ -40,6 +40,7 @@ public function register()
 ```
 
 or update `providers` section in your `config/app.php` file:
+
 ```php
 'providers' => [
     // ...
@@ -53,6 +54,7 @@ or update `providers` section in your `config/app.php` file:
 And call `php artisan vendor:publish --provider="Helldar\LastModified\ServiceProvider"` command, and `php artisan migrate` to create table in database.
 
 Next, add middleware in `$middlewareGroups > web` section in `app/Http/Kernel.php` file:
+
 ```php
 
 protected $middlewareGroups = [
@@ -64,11 +66,13 @@ protected $middlewareGroups = [
 
 **IMPORTANT!** It's recommended to add a middleware after `CheckForMaintenanceMode::class`.
 
-The system works like this: when opening a page, the middleware checks if there is an entry in the database table about this link. If there is, it checks the `Last-Modified` header key and returns either 200 or 304 code.
+The system works like this: when opening a page, the middleware checks if there is an entry in the database table about this link. If there is, it checks the `Last-Modified` header
+key and returns either 200 or 304 code.
 
 To add records to the table, it is recommended to create a console command in your application using the following example:
 
 ##### For creating/updating items:
+
 ```php
 use Helldar\LastModified\Services\LastModified;
 use Helldar\LastModified\Services\LastItem;
@@ -100,6 +104,7 @@ public function handle() {
 ```
 
 ##### For deleting items:
+
 ```php
 use Helldar\LastModified\Services\LastModified;
 use Helldar\LastModified\Services\LastItem;
@@ -132,6 +137,7 @@ public function handle() {
 If the model has no attribute `url`, it should be created.
 
 For example:
+
 ```php
 protected getUrlAttribute() {
     return route('company.show', [$this->slug]);
