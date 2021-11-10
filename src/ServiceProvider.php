@@ -1,6 +1,6 @@
 <?php
 
-namespace Helldar\LastModified;
+namespace DragonCode\LastModified;
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 

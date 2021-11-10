@@ -32,7 +32,6 @@ jobs:
                 with:
                     php-version: ${{ matrix.php }}
                     extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, gd, redis, pdo_mysql, pdo_pgsql
-                    tools: composer:v2
                     coverage: none
 
             -   name: Install dependencies

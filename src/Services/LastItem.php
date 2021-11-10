@@ -1,9 +1,9 @@
 <?php
 
-namespace Helldar\LastModified\Services;
+namespace DragonCode\LastModified\Services;
 
 use DateTimeInterface;
-use Helldar\LastModified\Exceptions\IncorrectUrlValueException;
+use DragonCode\LastModified\Exceptions\IncorrectUrlValueException;
 use Illuminate\Support\Facades\Validator;
 
 class LastItem

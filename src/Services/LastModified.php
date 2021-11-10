@@ -1,10 +1,10 @@
 <?php
 
-namespace Helldar\LastModified\Services;
+namespace DragonCode\LastModified\Services;
 
 use DateTimeInterface;
-use Helldar\LastModified\Exceptions\IncorrectBuilderTypeException;
-use Helldar\LastModified\Exceptions\UrlNotFoundException;
+use DragonCode\LastModified\Exceptions\IncorrectBuilderTypeException;
+use DragonCode\LastModified\Exceptions\UrlNotFoundException;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 

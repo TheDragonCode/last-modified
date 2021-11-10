@@ -1,6 +1,6 @@
 <?php
 
-namespace Helldar\LastModified\Middlewares;
+namespace DragonCode\LastModified\Middlewares;
 
 use Closure;
 use Helldar\LastModified\Services\Check;
@@ -8,14 +8,6 @@ use Illuminate\Http\Request;
 
 class CheckLastModified
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     *
-     * @return mixed
-     */
     public function handle(Request $request, Closure $next)
     {
         if ($this->isDisabled()) {
@@ -43,7 +35,7 @@ class CheckLastModified
 
     protected function service(Request $request): Check
     {
-        return new Check($request);
+        return Check::make($request);
     }
 
     protected function isDisabled(): bool

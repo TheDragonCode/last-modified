@@ -1,14 +1,17 @@
 <?php
 
-namespace Helldar\LastModified\Services;
+namespace DragonCode\LastModified\Services;
 
 use Carbon\Carbon;
 use DateTimeInterface;
-use Helldar\LastModified\Models\Model;
+use DragonCode\LastModified\Models\Model;
+use DragonCode\Support\Concerns\Makeable;
 use Illuminate\Http\Request;
 
 class Check
 {
+    use Makeable;
+
     /** @var \Illuminate\Http\Request */
     private $request;
 

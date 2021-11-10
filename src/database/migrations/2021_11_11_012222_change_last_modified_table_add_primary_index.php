@@ -7,21 +7,21 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class ChangeLastModifiedTableAddUrlColumn extends Migration
+class ChangeLastModifiedTableAddPrimaryIndex extends Migration
 {
     use TableName;
 
     public function up()
     {
         Schema::table($this->tableName(), function (Blueprint $table) {
-            $table->text('url')->nullable()->after('key');
+            $table->primary('key');
         });
     }
 
     public function down()
     {
         Schema::table($this->tableName(), function (Blueprint $table) {
-            $table->dropColumn('url');
+            $table->dropPrimary('key');
         });
     }
 }

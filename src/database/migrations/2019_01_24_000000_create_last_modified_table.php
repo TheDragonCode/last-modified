@@ -1,16 +1,17 @@
 <?php
 
+use DragonCode\LastModified\Concerns\Migrations\TableName;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 class CreateLastModifiedTable extends Migration
 {
-    protected $table = 'last_modified';
+    use TableName;
 
     public function up()
     {
-        Schema::create($this->table, function (Blueprint $table) {
+        Schema::create($this->tableName(), function (Blueprint $table) {
             $table->string('key')->unique();
 
             $table->timestamp('updated_at');
@@ -19,6 +20,6 @@ class CreateLastModifiedTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists($this->table);
+        Schema::dropIfExists($this->tableName());
     }
 }
