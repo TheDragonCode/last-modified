@@ -34,13 +34,16 @@ class Check
 
     public function getDate(): DateTimeInterface
     {
-        $item = $this->get();
-        $date = $item->updated_at ?? date('Y-m-d H:i:s');
+        if ($item = $this->get()) {
+            $date = $item->updated_at ?? date('Y-m-d H:i:s');
 
-        return Carbon::parse($date);
+            return Carbon::parse($date);
+        }
+
+        return Carbon::now();
     }
 
-    public function get(): Model
+    public function get(): ?Model
     {
         return Model::find($this->key);
     }
