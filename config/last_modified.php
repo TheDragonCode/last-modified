@@ -15,12 +15,4 @@ return [
 
         'table' => 'last_modified',
     ],
-
-    /*
-     * Check absolute or relative URL.
-     *
-     * Default, true
-     */
-
-    'absolute_url' => true,
 ];
