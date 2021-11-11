@@ -25,7 +25,7 @@ class CheckerTest extends TestCase
         $this->assertFalse($checker1->isNotModified());
         $this->assertNull($checker1->getDate());
 
-        $this->makeFake();
+        $this->fakeModel();
 
         $checker2 = Checker::make($this->requestInstance());
         $this->assertFalse($checker2->isNotModified());

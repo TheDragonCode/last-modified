@@ -16,7 +16,7 @@ class CheckLastModifiedTest extends TestCase
         $this->request($this->url())->assertStatus(200);
         $this->request($this->url())->assertStatus(200);
 
-        $this->makeFake();
+        $this->fakeModel();
 
         $this->request($this->url())->assertStatus(200);
         $this->request($this->url())->assertStatus(200);

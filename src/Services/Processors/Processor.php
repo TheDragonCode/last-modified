@@ -9,9 +9,10 @@ use DragonCode\LastModified\Concerns\Urlable;
 use DragonCode\LastModified\Facades\Config;
 use DragonCode\LastModified\Resources\Item;
 use DragonCode\Support\Concerns\Makeable;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
+use DragonCode\Support\Facades\Helpers\Instance;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Collection;
 use Psr\Http\Message\UriInterface;
 
 abstract class Processor
@@ -24,8 +25,20 @@ abstract class Processor
     public function collections(Collection ...$collections): self
     {
         foreach ($collections as $collection) {
-            $collection->each->tap(function (Model $model) {
-                $this->models($model);
+            $collection->each(function ($item) {
+                if (Instance::of($item, Model::class)) {
+                    $this->models($item);
+
+                    return;
+                }
+
+                if (Instance::of($item, Builder::class)) {
+                    $this->builders($item);
+
+                    return;
+                }
+
+                $this->manual($item);
             });
         }
 
@@ -35,7 +48,7 @@ abstract class Processor
     public function builders(Builder ...$builders): self
     {
         foreach ($builders as $builder) {
-            $builder->chunk($this->chunk(), function (Collection $collection) {
+            $builder->chunkById($this->chunk(), function (Collection $collection) {
                 $this->collections($collection);
             });
         }
