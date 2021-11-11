@@ -3,7 +3,8 @@
 namespace DragonCode\LastModified\Middlewares;
 
 use Closure;
-use Helldar\LastModified\Services\Check;
+use DragonCode\LastModified\Facades\Config;
+use DragonCode\LastModified\Services\Checker;
 use Illuminate\Http\Request;
 
 class CheckLastModified
@@ -23,7 +24,7 @@ class CheckLastModified
         return $this->setLastModified($request, $next, $service);
     }
 
-    protected function setLastModified(Request $request, Closure $next, Check $service)
+    protected function setLastModified(Request $request, Closure $next, Checker $service)
     {
         /** @var \Symfony\Component\HttpFoundation\Response $response */
         $response = $next($request);
@@ -33,13 +34,13 @@ class CheckLastModified
         return $response->setLastModified($date);
     }
 
-    protected function service(Request $request): Check
+    protected function service(Request $request): Checker
     {
-        return Check::make($request);
+        return Checker::make($request);
     }
 
     protected function isDisabled(): bool
     {
-        return ! config('last_modified.enabled');
+        return Config::disabled();
     }
 }

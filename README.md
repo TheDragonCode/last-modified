@@ -35,7 +35,7 @@ If you don't use auto-discovery, add the ServiceProvider to the providers array 
 ```php
 public function register()
 {
-    $this->app->register(\Helldar\LastModified\ServiceProvider::class);
+    $this->app->register(\DragonCode\LastModified\ServiceProvider::class);
 }
 ```
 
@@ -45,13 +45,13 @@ or update `providers` section in your `config/app.php` file:
 'providers' => [
     // ...
     
-    \Helldar\LastModified\ServiceProvider::class,
+    \DragonCode\LastModified\ServiceProvider::class,
     
     // ...
 ]
 ```
 
-And call `php artisan vendor:publish --provider="Helldar\LastModified\ServiceProvider"` command, and `php artisan migrate` to create table in database.
+And call `php artisan vendor:publish --provider="DragonCode\LastModified\ServiceProvider"` command, and `php artisan migrate` to create table in database.
 
 Next, add middleware in `$middlewareGroups > web` section in `app/Http/Kernel.php` file:
 
@@ -59,7 +59,7 @@ Next, add middleware in `$middlewareGroups > web` section in `app/Http/Kernel.ph
 
 protected $middlewareGroups = [
     'web' => [
-         \Helldar\LastModified\Middlewares\CheckLastModified::class,
+         \DragonCode\LastModified\Middlewares\CheckLastModified::class,
     ]
 ]
 ```
@@ -74,8 +74,7 @@ To add records to the table, it is recommended to create a console command in yo
 ##### For creating/updating items:
 
 ```php
-use Helldar\LastModified\Services\LastModified;
-use Helldar\LastModified\Services\LastItem;
+use DragonCode\LastModified\Services\Old\LastItem;use DragonCode\LastModified\Services\Old\LastModified;
 
 public function handle() {
     $collection_1 = Foo::whereIsActive(true)->get();
@@ -106,8 +105,7 @@ public function handle() {
 ##### For deleting items:
 
 ```php
-use Helldar\LastModified\Services\LastModified;
-use Helldar\LastModified\Services\LastItem;
+use DragonCode\LastModified\Services\Old\LastItem;use DragonCode\LastModified\Services\Old\LastModified;
 
 public function handle() {    
     $collection_1 = Foo::whereIsActive(false)->get();

@@ -14,5 +14,7 @@ return [
         'connection' => env('DB_CONNECTION', 'mysql'),
 
         'table' => 'last_modified',
+
+        'chunk' => 1000,
     ],
 ];

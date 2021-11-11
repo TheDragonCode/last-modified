@@ -1,153 +1,82 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DragonCode\LastModified\Services;
 
-use DateTimeInterface;
-use DragonCode\LastModified\Exceptions\IncorrectBuilderTypeException;
-use DragonCode\LastModified\Exceptions\UrlNotFoundException;
+use DragonCode\LastModified\Facades\Config;
+use DragonCode\LastModified\Resources\Item;
+use DragonCode\LastModified\Services\Processors\ToDelete;
+use DragonCode\LastModified\Services\Processors\ToUpdate;
+use DragonCode\Support\Concerns\Makeable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 class LastModified
 {
-    private $collections = [];
+    use Makeable;
 
-    private $builders = [];
+    protected $collections = [];
 
-    private $models = [];
+    protected $builders = [];
 
-    private $manuals = [];
+    protected $models = [];
 
-    public function collections(Collection ...$collections)
+    protected $manual = [];
+
+    public function collections(Collection ...$collections): self
     {
-        $this->collections = (array) $collections;
+        $this->collections = $collections;
 
         return $this;
     }
 
-    public function builders(...$builders)
+    public function builders(Builder ...$builders): self
     {
-        $this->builders = (array) $builders;
+        $this->builders = $builders;
 
         return $this;
     }
 
-    public function models(...$models)
+    public function models(Model ...$models): self
     {
-        $this->models = (array) $models;
+        $this->models = $models;
 
         return $this;
     }
 
-    public function manuals(LastItem ...$items)
+    public function manual(Item ...$items): self
     {
-        $this->manuals = (array) $items;
+        $this->manual = $items;
 
         return $this;
     }
 
-    /**
-     * @param  bool  $force
-     *
-     * @throws \Helldar\LastModified\Exceptions\UrlNotFoundException
-     */
-    public function update(bool $force = false)
+    public function update(): void
     {
-        if ($this->isDisabled($force)) {
-            return;
-        }
-
-        foreach ($this->collections as $collection) {
-            $collection->each(function ($model) {
-                $this->store($model);
-            });
-        }
-
-        foreach ($this->builders as $builder) {
-            if ($builder instanceof Builder) {
-                $builder
-                    ->get()
-                    ->each(function ($item) {
-                        $this->store($item);
-                    });
-            } else {
-                throw new IncorrectBuilderTypeException(get_class($builder));
-            }
-        }
-
-        foreach ($this->models as $model) {
-            $this->store($model);
-        }
-
-        foreach ($this->manuals as $item) {
-            $this->updateOrCreate($item->url, $item->updated_at);
+        if ($this->enabled()) {
+            ToUpdate::make()
+                ->collections(...$this->collections)
+                ->builders(...$this->builders)
+                ->models(...$this->models)
+                ->manual(...$this->manual);
         }
     }
 
-    public function delete(bool $force = false)
+    public function delete(): void
     {
-        if ($this->isDisabled($force)) {
-            return;
-        }
-
-        foreach ($this->collections as $collection) {
-            $collection->each(function ($model) {
-                $this->deleteFromTable($model->url);
-            });
-        }
-
-        foreach ($this->models as $model) {
-            $this->deleteFromTable($model->url);
-        }
-
-        foreach ($this->manuals as $item) {
-            $this->deleteFromTable($item->url);
+        if ($this->enabled()) {
+            ToDelete::make()
+                ->collections(...$this->collections)
+                ->builders(...$this->builders)
+                ->models(...$this->models)
+                ->manual(...$this->manual);
         }
     }
 
-    /**
-     * @param  \Illuminate\Database\Eloquent\Model  $model
-     *
-     * @throws \Helldar\LastModified\Exceptions\UrlNotFoundException
-     */
-    private function store($model)
+    protected function enabled(): bool
     {
-        if (! isset($model->url)) {
-            throw new UrlNotFoundException($model);
-        }
-
-        $updated_at = $model->updated_at ?? null;
-
-        $this->updateOrCreate($model->url, $updated_at);
-    }
-
-    private function updateOrCreate(string $url, DateTimeInterface $updated_at = null)
-    {
-        $url = $this->modifyUrl($url);
-
-        (new Check())->updateOrCreate($url, $updated_at);
-    }
-
-    private function deleteFromTable(string $url)
-    {
-        (new Check())->delete($url);
-    }
-
-    private function isDisabled(bool $force = false): bool
-    {
-        return ! $force && ! config('last_modified.enabled');
-    }
-
-    private function modifyUrl(string $url)
-    {
-        $absolute_url = config('last_modified.absolute_url', true);
-
-        if ($absolute_url) {
-            return $url;
-        }
-
-        $parsed = parse_url($url, PHP_URL_PATH);
-
-        return is_null($parsed) ? '/' : ltrim($parsed, '/');
+        return Config::enabled();
     }
 }

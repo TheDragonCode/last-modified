@@ -4,19 +4,22 @@ declare(strict_types=1);
 
 namespace DragonCode\LastModified\Models;
 
+use DragonCode\LastModified\Concerns\Migrations\Database;
 use Illuminate\Database\Eloquent\Model as BaseModel;
 
 class Model extends BaseModel
 {
+    use Database;
+
     public $timestamps = false;
 
     public $incrementing = false;
 
-    protected $primaryKey = 'key';
+    protected $primaryKey = 'hash';
 
     protected $keyType = 'string';
 
-    protected $fillable = ['key', 'url', 'updated_at'];
+    protected $fillable = ['hash', 'url', 'updated_at'];
 
     protected $casts = [
         'updated_at' => 'datetime',
@@ -24,8 +27,8 @@ class Model extends BaseModel
 
     public function __construct(array $attributes = [])
     {
-        $this->setConnection(config('last_modified.database.connection'));
-        $this->setTable(config('last_modified.database.table'));
+        $this->setConnection($this->connection());
+        $this->setTable($this->table());
 
         parent::__construct($attributes);
     }
