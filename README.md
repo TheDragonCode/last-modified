@@ -2,22 +2,22 @@
 
 <img src="https://preview.dragon-code.pro/TheDragonCode/last-modified.svg?brand=laravel" alt="Laravel Last Modified"/>
 
-Setting the response code 304 Not Modified in the absence of content changes.
-
 <p align="center">
-    <a href="https://packagist.org/packages/andrey-helldar/last-modified"><img src="https://img.shields.io/packagist/dt/andrey-helldar/last-modified.svg?style=flat-square" alt="Total Downloads" /></a>
-    <a href="https://packagist.org/packages/andrey-helldar/last-modified"><img src="https://poser.pugx.org/andrey-helldar/last-modified/v/stable?format=flat-square" alt="Latest Stable Version" /></a>
-    <a href="https://packagist.org/packages/andrey-helldar/last-modified"><img src="https://poser.pugx.org/andrey-helldar/last-modified/v/unstable?format=flat-square" alt="Latest Unstable Version" /></a>
-    <a href="LICENSE"><img src="https://poser.pugx.org/andrey-helldar/last-modified/license?format=flat-square" alt="License" /></a>
+    <a href="https://packagist.org/packages/dragon-code/last-modified"><img src="https://img.shields.io/packagist/dt/dragon-code/last-modified.svg?style=flat-square" alt="Total Downloads" /></a>
+    <a href="https://packagist.org/packages/dragon-code/last-modified"><img src="https://poser.pugx.org/dragon-code/last-modified/v/stable?format=flat-square" alt="Latest Stable Version" /></a>
+    <a href="https://packagist.org/packages/dragon-code/last-modified"><img src="https://poser.pugx.org/dragon-code/last-modified/v/unstable?format=flat-square" alt="Latest Unstable Version" /></a>
+    <a href="LICENSE"><img src="https://poser.pugx.org/dragon-code/last-modified/license?format=flat-square" alt="License" /></a>
 </p>
+
+> Setting the response code 304 Not Modified in the absence of content changes.
 
 
 ## Installation
 
-To get the latest version of `Last Modified` simply require the project using [Composer](https://getcomposer.org/):
+To get the latest version of `Last Modified` simply require the project using [Composer](https://getcomposer.org):
 
 ```bash
-$ composer require andrey-helldar/last-modified
+$ composer require dragon-code/last-modified
 ```
 
 Instead, you may of course manually update your require block and run `composer update` if you so choose:
@@ -25,41 +25,21 @@ Instead, you may of course manually update your require block and run `composer 
 ```json
 {
     "require": {
-        "andrey-helldar/last-modified": "^1.8"
+        "dragon-code/last-modified": "^2.0"
     }
 }
 ```
 
-If you don't use auto-discovery, add the ServiceProvider to the providers array in `app/Providers/AppServiceProvider.php`:
-
-```php
-public function register()
-{
-    $this->app->register(\Helldar\LastModified\ServiceProvider::class);
-}
-```
-
-or update `providers` section in your `config/app.php` file:
-
-```php
-'providers' => [
-    // ...
-    
-    \Helldar\LastModified\ServiceProvider::class,
-    
-    // ...
-]
-```
-
-And call `php artisan vendor:publish --provider="Helldar\LastModified\ServiceProvider"` command, and `php artisan migrate` to create table in database.
+And call `php artisan vendor:publish --provider="DragonCode\LastModified\ServiceProvider"` command, and `php artisan migrate` to create table in database.
 
 Next, add middleware in `$middlewareGroups > web` section in `app/Http/Kernel.php` file:
 
 ```php
+use DragonCode\LastModified\Middlewares\CheckLastModified;
 
 protected $middlewareGroups = [
     'web' => [
-         \Helldar\LastModified\Middlewares\CheckLastModified::class,
+         CheckLastModified::class,
     ]
 ]
 ```
@@ -71,13 +51,52 @@ key and returns either 200 or 304 code.
 
 To add records to the table, it is recommended to create a console command in your application using the following example:
 
-##### For creating/updating items:
+### Upgrade from `andrey-helldar/last-modified`
+
+1. Replace `"andrey-helldar/last-modified": "^1.0"` with `"dragon-code/last-modified": "^2.0"` in the `composer.json` file;
+2. If you don't use auto-discovery, replace the `Helldar\LastModified\ServiceProvider` with `DragonCode\LastModified\ServiceProvider`;
+3. Replace the `Helldar\LastModified\Middlewares\CheckLastModified` middleware with `DragonCode\LastModified\Middlewares\CheckLastModified`;
+4. Replace the `new Helldar\LastModified\Services\LastModified` class with `DragonCode\LastModified\Services\LastModified::make()`:
+   > Before:
+   > ```php
+   > (new LastModified)
+   >      ->collections(...)
+   >      ->builders(...)
+   >      ->models(...)
+   >      ->manuals(...)
+   >      ->update(bool $force = false);
+   > ```
+   > After:
+   > ```php
+   > LastModified::make()
+   >      ->collections(...)
+   >      ->builders(...)
+   >      ->models(...)
+   >      ->manual(...)
+   >      ->update();
+   > ```
+5. Replace the `new Helldar\LastModified\Services\LastItem` class with `DragonCode\LastModified\Resources\Item::make()`:
+   > Before:
+   > ```php
+   > new LastItem('http://example.com/foo', Carbon::now());
+   > new LastItem('http://example.com/baz?id=1');
+   > ```
+   > After:
+   > ```php
+   > Item::make(['url' => 'http://example.com/foo', 'updated_at' => Carbon::now()])
+   > Item::make(['url' => 'http://example.com/baz?id=1', 'updated_at' => Carbon::now()])
+   > ```
+6. Call the `composer update` console command.
+
+## Create / Update
 
 ```php
-use Helldar\LastModified\Services\LastModified;
-use Helldar\LastModified\Services\LastItem;
+use Carbon\Carbon;
+use DragonCode\LastModified\Resources\Item;
+use DragonCode\LastModified\Services\LastModified;
 
-public function handle() {
+public function handle()
+{
     $collection_1 = Foo::whereIsActive(true)->get();
     $collection_2 = Bar::where('id', '>', 50)->get();
     $collection_3 = Baz::query()->get();
@@ -90,45 +109,16 @@ public function handle() {
     $model_2 = Bar::where('id', '>', 50)->first();
     $model_3 = Baz::query()->first();
     
-    $item_1 = new LastItem('http://example.com/foo', Carbon::now());
-    $item_2 = new LastItem('http://example.com/bar', Carbon::parse('2018-03-02'));
-    $item_3 = new LastItem('http://example.com/baz?id=1');
+    $item_1 = Item::make(['url' => 'https://example.com/foo',      'updated_at' => Carbon::now());
+    $item_2 = Item::make(['url' => 'https://example.com/bar',      'updated_at' => Carbon::parse('2018-03-02'));
+    $item_3 = Item::make(['url' => 'https://example.com/baz?id=1', 'updated_at' => Carbon::now());
     
-    (new LastModified)
+    LastModified::make()
         ->collections($collection_1, $collection_2, $collection_3)
         ->builders($builder_1, $builder_2, $builder_3)
         ->models($model_1, $model_2, $model_3)
-        ->manuals($item_1, $item_2, $item_3)
-        ->update(bool $force = false);
-}
-```
-
-##### For deleting items:
-
-```php
-use Helldar\LastModified\Services\LastModified;
-use Helldar\LastModified\Services\LastItem;
-
-public function handle() {    
-    $collection_1 = Foo::whereIsActive(false)->get();
-    $collection_2 = Bar::whereIn('id', [50, 60, 62, 73])->get();
-
-    $builder_1 = Foo::whereIsActive(true);
-    $builder_2 = Bar::where('id', '>', 50);
-    $builder_3 = Baz::query();
-    
-    $model_1 = Foo::whereIsActive(false)->first();
-    $model_2 = Bar::whereIn('id', [50, 60, 62, 73])->first();
-    
-    $item_1 = new LastItem('http://example.com/foo');
-    $item_2 = new LastItem('http://example.com/bar');
-    
-    (new LastModified)
-        ->collections($collection_1, $collection_2, $collection_3)
-        ->builders($builder_1, $builder_2, $builder_3)
-        ->models($model_1, $model_2, $model_3)
-        ->manuals($item_1, $item_2, $item_3)
-        ->delete(bool $force = false);
+        ->manual($item_1, $item_2, $item_3)
+        ->update();
 }
 ```
 
@@ -139,39 +129,93 @@ If the model has no attribute `url`, it should be created.
 For example:
 
 ```php
-protected getUrlAttribute() {
-    return route('company.show', [$this->slug]);
+protected getUrlAttribute(): string
+{
+    $slug = $this->slug;
+
+    return route('page.show', compact('slug'));
 }
 ```
 
-Using the console command is optional. You can also create, for example, events or observers to update the data in the table.
+## Delete
 
-See example in [gist](https://gist.github.com/andrey-helldar/7051619379a98c8335af15cc0fb5bf6f).
+```php
+use Carbon\Carbon;
+use DragonCode\LastModified\Resources\Item;
+use DragonCode\LastModified\Services\LastModified;
 
+public function handle()
+{    
+    $collection_1 = Foo::whereIsActive(false)->get();
+    $collection_2 = Bar::whereIn('id', [50, 60, 62, 73])->get();
 
-##### Absolute or relative URLs
+    $builder_1 = Foo::whereIsActive(true);
+    $builder_2 = Bar::where('id', '>', 50);
+    $builder_3 = Baz::query();
+    
+    $model_1 = Foo::whereIsActive(false)->first();
+    $model_2 = Bar::whereIn('id', [50, 60, 62, 73])->first();
+    
+    $item_1 = Item::make(['url' => 'https://example.com/foo', 'updated_at' => Carbon::now()]);
+    $item_2 = Item::make(['url' => 'https://example.com/bar', 'updated_at' => Carbon::now()]);
+    
+    LastModified::make()
+        ->collections($collection_1, $collection_2, $collection_3)
+        ->builders($builder_1, $builder_2, $builder_3)
+        ->models($model_1, $model_2, $model_3)
+        ->manual($item_1, $item_2, $item_3)
+        ->delete();
+}
+```
 
-If your application is multi-domain, you can set page refresh labels without regard to the domain name.
+## Observer
 
-Example:
+In order to reduce the load on the database and free up the crown queue, it is recommended to use the observer to update the records:
 
-when `absolute_url` is `true`:
+```php
+namespace App\Observers;
 
-|url|md5|returned date|
-|---|---|---|
-|https://example1.com/foo/bar/baz|8b023041767447ece63485467a0eb3f2|2019-02-08 12:34:47|
-|https://example2.com/foo/bar/baz|e61e56084eba741df97ca6ea2c46c8f8|2018-03-15 01:47:17|
-|https://example2.com/foo/bar/baz?id=1|d3990842ce7cafd30780d285eef3baf9|2021-10-31 01:28:17|
+use Illuminate\Database\Eloquent\Model;
+use DragonCode\LastModified\Services\LastModified;
 
-when `absolute_url` is `false`:
+class LastModifiedObserver
+{
+    public function saving(Model $model)
+    {
+        LastModified::make()
+            ->models($model)
+            ->update();
+    }
 
-|url|md5|returned date|
-|---|---|---|
-|https://example1.com/foo/bar/baz|7c709be36bd82265bb0eb74a233f3040|2019-02-08 12:34:47|
-|https://example2.com/foo/bar/baz|7c709be36bd82265bb0eb74a233f3040|2019-02-08 12:34:47|
-|https://example3.com/foo/bar/baz?id=1|7c709be36bd82265bb0eb74a233f3040|2019-02-08 12:34:47|
+    public function deleting(Model $model)
+    {
+        LastModified::make()
+            ->models($model)
+            ->delete();
+    }
+}
+```
 
-By default, the package uses an absolute link.
+Don't forget to add the link to the service provider:
+
+```php
+namespace App\Providers;
+
+use App\Observers\LastModifiedObserver;
+use Illuminate\Foundation\Auth\User;
+use Illuminate\Support\ServiceProvider;
+
+class ObserverServiceProvider extends ServiceProvider
+{
+    public function boot()
+    {
+        Page::observe(LastModifiedObserver::class);
+        News::observe(LastModifiedObserver::class);
+
+        // ...
+    }
+}
+```
 
 ## License
 

@@ -1,24 +1,32 @@
 <?php
 
-namespace Helldar\LastModified\Middlewares;
+/*
+ * This file is part of the "dragon-code/last-modified" project.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @author Andrey Helldar <helldar@ai-rus.com>
+ *
+ * @copyright 2021 Andrey Helldar
+ *
+ * @license MIT
+ *
+ * @see https://github.com/TheDragonCode/last-modified
+ */
+
+namespace DragonCode\LastModified\Middlewares;
 
 use Closure;
-use Helldar\LastModified\Services\Check;
+use DragonCode\LastModified\Facades\Config;
+use DragonCode\LastModified\Services\Checker;
 use Illuminate\Http\Request;
 
 class CheckLastModified
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     *
-     * @return mixed
-     */
     public function handle(Request $request, Closure $next)
     {
-        if ($this->isDisabled()) {
+        if ($this->isDisabled() || $this->disallowMethod($request)) {
             return $next($request);
         }
 
@@ -31,7 +39,7 @@ class CheckLastModified
         return $this->setLastModified($request, $next, $service);
     }
 
-    protected function setLastModified(Request $request, Closure $next, Check $service)
+    protected function setLastModified(Request $request, Closure $next, Checker $service)
     {
         /** @var \Symfony\Component\HttpFoundation\Response $response */
         $response = $next($request);
@@ -41,13 +49,20 @@ class CheckLastModified
         return $response->setLastModified($date);
     }
 
-    protected function service(Request $request): Check
+    protected function service(Request $request): Checker
     {
-        return new Check($request);
+        return Checker::make($request);
     }
 
     protected function isDisabled(): bool
     {
-        return ! config('last_modified.enabled');
+        return Config::disabled();
+    }
+
+    protected function disallowMethod(Request $request): bool
+    {
+        $method = $request->getRealMethod();
+
+        return ! in_array($method, ['GET', 'HEAD'], true);
     }
 }

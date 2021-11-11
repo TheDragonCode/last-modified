@@ -9,9 +9,11 @@ jobs:
             fail-fast: true
             matrix:
                 php: [ "7.3", "7.4", "8.0" ]
-                laravel: [ "6.0" ,"7.0", "8.0" ]
+                laravel:
+                    - laravel/framework:^7.0 doctrine/dbal:^2.6
+                    - laravel/framework:^8.0 doctrine/dbal:^3.0
 
-        name: php ${{ matrix.php }}, laravel ${{ matrix.laravel }}
+        name: php ${{ matrix.php }}, ${{ matrix.laravel }}
 
         services:
             mysql:
@@ -31,12 +33,11 @@ jobs:
                 uses: shivammathur/setup-php@v2
                 with:
                     php-version: ${{ matrix.php }}
-                    extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, gd, redis, pdo_mysql, pdo_pgsql
-                    tools: composer:v2
+                    extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, gd, redis, pdo_mysql
                     coverage: none
 
             -   name: Install dependencies
-                run: composer require laravel/framework:^${{ matrix.laravel }}
+                run: composer require --dev ${{ matrix.laravel }}
 
             -   name: Execute tests
                 run: sudo vendor/bin/phpunit
