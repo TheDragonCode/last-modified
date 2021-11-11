@@ -26,7 +26,7 @@ class CheckLastModified
 {
     public function handle(Request $request, Closure $next)
     {
-        if ($this->isDisabled()) {
+        if ($this->isDisabled() || $this->disallowMethod($request)) {
             return $next($request);
         }
 
@@ -57,5 +57,12 @@ class CheckLastModified
     protected function isDisabled(): bool
     {
         return Config::disabled();
+    }
+
+    protected function disallowMethod(Request $request): bool
+    {
+        $method = $request->getRealMethod();
+
+        return ! in_array($method, ['GET', 'HEAD'], true);
     }
 }
