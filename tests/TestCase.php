@@ -23,6 +23,8 @@ abstract class TestCase extends BaseTestCase
     use Requests;
     use Urlable;
 
+    protected $enabled = true;
+
     protected function getPackageProviders($app): array
     {
         return [
@@ -55,5 +57,7 @@ abstract class TestCase extends BaseTestCase
         $config = $app['config'];
 
         $config->set('last_modified.database.chunk', 20);
+
+        $config->set('last_modified.enabled', $this->enabled);
     }
 }

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Resources;
+namespace Tests\WhenEnabled\Resources;
 
 use DragonCode\LastModified\Resources\Item;
 use DragonCode\Support\Exceptions\NotValidUrlException;
-use Tests\TestCase;
+use Tests\WhenEnabled\TestCase;
 
 class ItemTest extends TestCase
 {

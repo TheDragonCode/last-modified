@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\Support;
+namespace Tests\WhenEnabled\Support;
 
 use DragonCode\LastModified\Facades\Config;
-use Tests\TestCase;
+use Tests\WhenEnabled\TestCase;
 
 class ConfigTest extends TestCase
 {

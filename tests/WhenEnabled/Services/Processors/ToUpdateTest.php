@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Tests\Services\Processors;
+namespace Tests\WhenEnabled\Services\Processors;
 
 use DragonCode\LastModified\Resources\Item;
 use DragonCode\LastModified\Services\Processors\ToUpdate;
 use Tests\fixtures\Models\Custom;
-use Tests\TestCase;
+use Tests\WhenEnabled\TestCase;
 
 class ToUpdateTest extends TestCase
 {
@@ -140,8 +140,6 @@ class ToUpdateTest extends TestCase
         $manual = Custom::query()->get()->map(function (Custom $custom) {
             return Item::make($custom->only(['url', 'updated_at']));
         });
-
-        ToUpdate::make()->collections($manual);
 
         ToUpdate::make()->manual($manual[0], $manual[1]);
 

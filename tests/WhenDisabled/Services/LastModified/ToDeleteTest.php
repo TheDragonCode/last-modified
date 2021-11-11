@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Tests\Services\Processors;
+namespace Tests\WhenDisabled\Services\LastModified;
 
 use DragonCode\LastModified\Resources\Item;
-use DragonCode\LastModified\Services\Processors\ToDelete;
+use DragonCode\LastModified\Services\LastModified;
 use Tests\fixtures\Models\Custom;
-use Tests\TestCase;
+use Tests\WhenDisabled\TestCase;
 
 class ToDeleteTest extends TestCase
 {
@@ -19,9 +19,11 @@ class ToDeleteTest extends TestCase
 
         $this->assertDatabaseCount($this->table(), 30, $this->connection());
 
-        ToDelete::make()->collections($collection);
+        LastModified::make()
+            ->collections($collection)
+            ->delete();
 
-        $this->assertDatabaseCount($this->table(), 0, $this->connection());
+        $this->assertDatabaseCount($this->table(), 30, $this->connection());
     }
 
     public function testCollectionBuilders()
@@ -36,9 +38,11 @@ class ToDeleteTest extends TestCase
 
         $collection = collect()->push($builder);
 
-        ToDelete::make()->collections($collection);
+        LastModified::make()
+            ->collections($collection)
+            ->delete();
 
-        $this->assertDatabaseCount($this->table(), 0, $this->connection());
+        $this->assertDatabaseCount($this->table(), 30, $this->connection());
     }
 
     public function testCollectionManual()
@@ -53,7 +57,11 @@ class ToDeleteTest extends TestCase
             return Item::make($custom->only(['url', 'updated_at']));
         });
 
-        ToDelete::make()->collections($manual);
+        LastModified::make()
+            ->collections($manual)
+            ->delete();
+
+        $this->assertDatabaseCount($this->table(), 30, $this->connection());
     }
 
     public function testBuilders()
@@ -66,9 +74,11 @@ class ToDeleteTest extends TestCase
 
         $builder = Custom::query();
 
-        ToDelete::make()->builders($builder);
+        LastModified::make()
+            ->builders($builder)
+            ->delete();
 
-        $this->assertDatabaseCount($this->table(), 0, $this->connection());
+        $this->assertDatabaseCount($this->table(), 100, $this->connection());
     }
 
     public function testModels()
@@ -83,9 +93,11 @@ class ToDeleteTest extends TestCase
         $model2 = $collection->get(1);
         $model3 = $collection->get(2);
 
-        ToDelete::make()->models($model1, $model2, $model3);
+        LastModified::make()
+            ->models($model1, $model2, $model3)
+            ->delete();
 
-        $this->assertDatabaseCount($this->table(), 0, $this->connection());
+        $this->assertDatabaseCount($this->table(), 3, $this->connection());
     }
 
     public function testManual()
@@ -100,8 +112,10 @@ class ToDeleteTest extends TestCase
             return Item::make($custom->only(['url', 'updated_at']));
         });
 
-        ToDelete::make()->manual($manual[0], $manual[1]);
+        LastModified::make()
+            ->manual($manual[0], $manual[1])
+            ->delete();
 
-        $this->assertDatabaseCount($this->table(), 0, $this->connection());
+        $this->assertDatabaseCount($this->table(), 2, $this->connection());
     }
 }

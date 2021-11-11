@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\Services;
+namespace Tests\WhenEnabled\Services;
 
 use DragonCode\LastModified\Services\Checker;
-use Tests\TestCase;
+use Tests\WhenEnabled\TestCase;
 
 class CheckerTest extends TestCase
 {

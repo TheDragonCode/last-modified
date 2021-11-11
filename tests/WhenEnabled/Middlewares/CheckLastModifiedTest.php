@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Tests\Middlewares;
+namespace Tests\WhenEnabled\Middlewares;
 
-use Tests\TestCase;
+use Tests\WhenEnabled\TestCase;
 
 class CheckLastModifiedTest extends TestCase
 {
