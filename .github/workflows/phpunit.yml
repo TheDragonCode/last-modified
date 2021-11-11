@@ -9,7 +9,9 @@ jobs:
             fail-fast: true
             matrix:
                 php: [ "7.3", "7.4", "8.0" ]
-                laravel: [ "7.0", "8.0" ]
+                laravel:
+                    - laravel/framework:^7.0 doctrine/dbal:^2.6
+                    - laravel/framework:^8.0 doctrine/dbal:^3.0
 
         name: php ${{ matrix.php }}, laravel ${{ matrix.laravel }}
 
@@ -35,7 +37,7 @@ jobs:
                     coverage: none
 
             -   name: Install dependencies
-                run: composer require laravel/framework:^${{ matrix.laravel }}
+                run: composer require --dev ${{ matrix.laravel }}
 
             -   name: Execute tests
                 run: sudo vendor/bin/phpunit
