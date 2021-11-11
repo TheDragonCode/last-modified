@@ -11,7 +11,7 @@ use DragonCode\Support\Concerns\Makeable;
 use Illuminate\Http\Request;
 
 /**
- * @method static make(Request $request = null)
+ * @method static Checker make(Request $request = null)
  */
 class Checker
 {

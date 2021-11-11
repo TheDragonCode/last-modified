@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Concerns;
 
-use Carbon\Carbon;
 use DragonCode\LastModified\Concerns\Urlable as BaseUrl;
+use Illuminate\Support\Carbon;
 
 trait Urlable
 {
