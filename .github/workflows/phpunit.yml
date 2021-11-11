@@ -13,7 +13,7 @@ jobs:
                     - laravel/framework:^7.0 doctrine/dbal:^2.6
                     - laravel/framework:^8.0 doctrine/dbal:^3.0
 
-        name: php ${{ matrix.php }}, laravel ${{ matrix.laravel }}
+        name: php ${{ matrix.php }}, ${{ matrix.laravel }}
 
         services:
             mysql:
