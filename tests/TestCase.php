@@ -16,6 +16,7 @@ use Tests\fixtures\Providers\TestServiceProvider;
 
 abstract class TestCase extends BaseTestCase
 {
+    use Concerns\Database;
     use Database;
     use Fakeable;
     use RefreshDatabase;

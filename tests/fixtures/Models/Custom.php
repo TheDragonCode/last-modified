@@ -11,7 +11,7 @@ class Custom extends Model
 {
     protected $table = 'custom';
 
-    protected $fillable = ['slug'];
+    protected $fillable = ['slug', 'updated_at'];
 
     protected function setSlugAttribute(string $slug): void
     {

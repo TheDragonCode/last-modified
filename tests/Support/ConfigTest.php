@@ -33,6 +33,6 @@ class ConfigTest extends TestCase
     {
         $this->assertIsNumeric(Config::databaseChunk());
 
-        $this->assertSame(1000, Config::databaseChunk());
+        $this->assertSame(20, Config::databaseChunk());
     }
 }

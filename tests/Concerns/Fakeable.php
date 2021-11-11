@@ -28,7 +28,9 @@ trait Fakeable
         for ($i = 0; $i < $count; $i++) {
             $slug = Str::random();
 
-            $model = Custom::query()->create(compact('slug'));
+            $updated_at = $this->today();
+
+            $model = Custom::query()->create(compact('slug', 'updated_at'));
 
             $items->push($model);
 

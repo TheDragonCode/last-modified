@@ -13,27 +13,7 @@ class LastModifiedTest extends TestCase
 
     }
 
-    public function testCollections()
-    {
-
-    }
-
     public function testDelete()
-    {
-
-    }
-
-    public function testBuilders()
-    {
-
-    }
-
-    public function testManual()
-    {
-
-    }
-
-    public function testModels()
     {
 
     }
