@@ -7,6 +7,7 @@ namespace Tests\Concerns;
 use DragonCode\LastModified\Models\Model;
 use DragonCode\Support\Facades\Helpers\Str;
 use Illuminate\Database\Eloquent\Model as BaseModel;
+use Illuminate\Support\Collection;
 use Tests\fixtures\Models\Custom;
 
 trait Fakeable
@@ -20,17 +21,23 @@ trait Fakeable
         ]);
     }
 
-    protected function fakeCustom(int $count, bool $set_last = true): void
+    protected function fakeCustom(int $count, bool $set_last = true): Collection
     {
+        $items = collect();
+
         for ($i = 0; $i < $count; $i++) {
             $slug = Str::random();
 
             $model = Custom::query()->create(compact('slug'));
 
+            $items->push($model);
+
             if ($set_last) {
                 $this->setFakeLastModified($model);
             }
         }
+
+        return $items;
     }
 
     protected function setFakeLastModified(BaseModel $model): void

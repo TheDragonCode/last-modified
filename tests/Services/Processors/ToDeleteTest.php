@@ -15,13 +15,11 @@ class ToDeleteTest extends TestCase
     {
         $this->assertDatabaseCount($this->table(), 0, $this->connection());
 
-        $this->fakeCustom(30);
+        $collection = $this->fakeCustom(30);
 
         $this->assertDatabaseCount($this->table(), 30, $this->connection());
 
-        $models = Custom::query()->get();
-
-        ToDelete::make()->collections($models);
+        ToDelete::make()->collections($collection);
 
         $this->assertDatabaseCount($this->table(), 0, $this->connection());
     }
@@ -36,7 +34,9 @@ class ToDeleteTest extends TestCase
 
         $builder = Custom::query();
 
-        ToDelete::make()->collections(collect($builder));
+        $collection = collect()->push($builder);
+
+        ToDelete::make()->collections($collection);
 
         $this->assertDatabaseCount($this->table(), 0, $this->connection());
     }
@@ -45,11 +45,11 @@ class ToDeleteTest extends TestCase
     {
         $this->assertDatabaseCount($this->table(), 0, $this->connection());
 
-        $this->fakeCustom(30);
+        $collection = $this->fakeCustom(30);
 
         $this->assertDatabaseCount($this->table(), 30, $this->connection());
 
-        $manual = Custom::query()->get()->map(static function (Custom $custom) {
+        $manual = $collection->map(static function (Custom $custom) {
             return Item::make($custom->only(['url', 'updated_at']));
         });
 
@@ -75,13 +75,13 @@ class ToDeleteTest extends TestCase
     {
         $this->assertDatabaseCount($this->table(), 0, $this->connection());
 
-        $this->fakeCustom(3);
+        $collection = $this->fakeCustom(3);
 
         $this->assertDatabaseCount($this->table(), 3, $this->connection());
 
-        $model1 = Custom::query()->find(1);
-        $model2 = Custom::query()->find(2);
-        $model3 = Custom::query()->find(3);
+        $model1 = $collection->get(0);
+        $model2 = $collection->get(1);
+        $model3 = $collection->get(2);
 
         ToDelete::make()->models($model1, $model2, $model3);
 
@@ -92,17 +92,15 @@ class ToDeleteTest extends TestCase
     {
         $this->assertDatabaseCount($this->table(), 0, $this->connection());
 
-        $this->fakeCustom(2);
+        $collection = $this->fakeCustom(2);
 
         $this->assertDatabaseCount($this->table(), 2, $this->connection());
 
-        $model1 = Custom::query()->find(1);
-        $model2 = Custom::query()->find(2);
+        $manual = $collection->map(function (Custom $custom) {
+            return Item::make($custom->only(['url', 'updated_at']));
+        });
 
-        $item1 = Item::make($model1->only(['url', 'updated_at']));
-        $item2 = Item::make($model2->only(['url', 'updated_at']));
-
-        ToDelete::make()->manual($item1, $item2);
+        ToDelete::make()->manual($manual[0], $manual[1]);
 
         $this->assertDatabaseCount($this->table(), 0, $this->connection());
     }

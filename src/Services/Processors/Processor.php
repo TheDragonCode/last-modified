@@ -10,6 +10,7 @@ use DragonCode\LastModified\Facades\Config;
 use DragonCode\LastModified\Resources\Item;
 use DragonCode\Support\Concerns\Makeable;
 use DragonCode\Support\Facades\Helpers\Instance;
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
@@ -32,7 +33,7 @@ abstract class Processor
                     return;
                 }
 
-                if (Instance::of($item, Builder::class)) {
+                if (Instance::of($item, [Builder::class, EloquentBuilder::class])) {
                     $this->builders($item);
 
                     return;
@@ -45,7 +46,12 @@ abstract class Processor
         return $this;
     }
 
-    public function builders(Builder ...$builders): self
+    /**
+     * @param  \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder  ...$builders
+     *
+     * @return $this
+     */
+    public function builders(...$builders): self
     {
         foreach ($builders as $builder) {
             $builder->chunkById($this->chunk(), function (Collection $collection) {
@@ -59,9 +65,9 @@ abstract class Processor
     public function models(Model ...$models): self
     {
         foreach ($models as $model) {
-            $item = Item::make(
-                $model->only(['url', 'updated_at'])
-            );
+            $values = $model->only(['url', 'updated_at']);
+
+            $item = Item::make($values);
 
             $this->manual($item);
         }
