@@ -31,6 +31,9 @@
         "orchestra/testbench": "^5.0|^6.0",
         "phpunit/phpunit": "^9.0"
     },
+    "conflict": {
+        "andrey-helldar/last-modified": "*"
+    },
     "autoload": {
         "psr-4": {
             "DragonCode\\LastModified\\": "src"
