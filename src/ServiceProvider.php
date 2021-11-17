@@ -32,6 +32,9 @@ class ServiceProvider extends BaseServiceProvider
         $this->registerConfig();
     }
 
+    /**
+     * @deprecated Will be deleted since 3.0 version.
+     */
     protected function bootMigrations(): void
     {
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');

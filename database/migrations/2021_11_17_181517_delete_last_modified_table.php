@@ -21,6 +21,9 @@ use DragonCode\LastModified\Concerns\Migrations\Database;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
+/**
+ * @deprecated Will be deleted since 3.0 version.
+ */
 class DeleteLastModifiedTable extends Migration
 {
     use Database;
