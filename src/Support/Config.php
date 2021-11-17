@@ -69,6 +69,11 @@ class Config
         return $this->getInteger($value, 43200);
     }
 
+    public function requestIgnoreKeys(): array
+    {
+        return config('last_modified.requests.ignore.keys', []);
+    }
+
     protected function getInteger(int $value, int $default): int
     {
         return abs($value) > 1 ? abs($value) : $default;

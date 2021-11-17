@@ -24,8 +24,8 @@ use DragonCode\LastModified\Middlewares\CheckLastModified;
 use DragonCode\LastModified\ServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Orchestra\Testbench\TestCase as BaseTestCase;
-use Tests\Concerns\Fakeable;
 use Tests\Concerns\Asserts;
+use Tests\Concerns\Fakeable;
 use Tests\Concerns\Requests;
 use Tests\Concerns\Urlable;
 use Tests\fixtures\Providers\TestServiceProvider;
@@ -82,5 +82,7 @@ abstract class TestCase extends BaseTestCase
         $config->set('last_modified.database.chunk', 20);
 
         $config->set('last_modified.enabled', $this->enabled);
+
+        $config->set('last_modified.requests.ignore.keys', ['qwe', '*led', 'dat*', '*ifi*']);
     }
 }

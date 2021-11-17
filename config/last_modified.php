@@ -70,4 +70,28 @@ return [
 
         'ttl' => 43200,
     ],
+
+    /*
+     * This option contains settings for working with requests.
+     */
+
+    'requests' => [
+
+        /*
+         * This option contains ignore settings.
+         */
+
+        'ignore' => [
+
+            /*
+             * This option contains key patterns to be ignored when retrieving the hash.
+             *
+             * This is especially useful for SEO.
+             *
+             * For example,
+             *   ['qwe', '*led', 'dat*', '*ifi*']
+             */
+            'keys' => [],
+        ],
+    ],
 ];

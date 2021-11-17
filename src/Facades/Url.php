@@ -19,17 +19,16 @@ declare(strict_types=1);
 
 namespace DragonCode\LastModified\Facades;
 
-use DragonCode\LastModified\Support\Config as Support;
+use DragonCode\LastModified\Support\Url as Support;
+use DragonCode\Support\Helpers\Http\Builder;
 use Illuminate\Support\Facades\Facade;
+use Psr\Http\Message\UriInterface;
 
 /**
- * @method static array requestIgnoreKeys()
- * @method static bool disabled()
- * @method static bool enabled()
- * @method static int cacheTtl()
- * @method static int databaseChunk()
+ * @method static Builder parse(string $url)
+ * @method static string hash(UriInterface|string $url)
  */
-class Config extends Facade
+class Url extends Facade
 {
     protected static function getFacadeAccessor(): string
     {
