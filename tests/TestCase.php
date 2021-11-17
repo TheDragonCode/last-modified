@@ -20,21 +20,19 @@ declare(strict_types=1);
 namespace Tests;
 
 use DragonCode\LastModified\Concerns\Cacheable;
-use DragonCode\LastModified\Concerns\Migrations\Database;
 use DragonCode\LastModified\Middlewares\CheckLastModified;
 use DragonCode\LastModified\ServiceProvider;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 use Tests\Concerns\Fakeable;
+use Tests\Concerns\Has;
 use Tests\Concerns\Requests;
 use Tests\Concerns\Urlable;
 
 abstract class TestCase extends BaseTestCase
 {
     use Cacheable;
-    use Database;
     use Fakeable;
-    use RefreshDatabase;
+    use Has;
     use Requests;
     use Urlable;
 

@@ -28,26 +28,22 @@ class ToDeleteTest extends TestCase
 {
     public function testCollectionModels()
     {
-        $this->assertDatabaseCount($this->table(), 0, $this->connection());
+        $fakes = $this->fakeCustom(30);
 
-        $collection = $this->fakeCustom(30);
-
-        $this->assertDatabaseCount($this->table(), 30, $this->connection());
+        $this->assertHasManyCache($fakes);
 
         LastModified::make()
-            ->collections($collection)
+            ->collections($fakes)
             ->delete();
 
-        $this->assertDatabaseCount($this->table(), 30, $this->connection());
+        $this->assertDoesntManyCache($fakes);
     }
 
     public function testCollectionBuilders()
     {
-        $this->assertDatabaseCount($this->table(), 0, $this->connection());
+        $fakes = $this->fakeCustom(30);
 
-        $this->fakeCustom(30);
-
-        $this->assertDatabaseCount($this->table(), 30, $this->connection());
+        $this->assertHasManyCache($fakes);
 
         $builder = Custom::query();
 
@@ -57,18 +53,16 @@ class ToDeleteTest extends TestCase
             ->collections($collection)
             ->delete();
 
-        $this->assertDatabaseCount($this->table(), 30, $this->connection());
+        $this->assertDoesntManyCache($fakes);
     }
 
     public function testCollectionManual()
     {
-        $this->assertDatabaseCount($this->table(), 0, $this->connection());
+        $fakes = $this->fakeCustom(30);
 
-        $collection = $this->fakeCustom(30);
+        $this->assertHasManyCache($fakes);
 
-        $this->assertDatabaseCount($this->table(), 30, $this->connection());
-
-        $manual = $collection->map(static function (Custom $custom) {
+        $manual = $fakes->map(static function (Custom $custom) {
             return Item::make($custom->only(['url', 'updated_at']));
         });
 
@@ -76,7 +70,7 @@ class ToDeleteTest extends TestCase
             ->collections($manual)
             ->delete();
 
-        $this->assertDatabaseCount($this->table(), 30, $this->connection());
+        $this->assertDoesntManyCache($fakes);
     }
 
     public function testBuilders()

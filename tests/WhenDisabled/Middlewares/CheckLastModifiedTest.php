@@ -25,6 +25,8 @@ class CheckLastModifiedTest extends TestCase
 {
     public function testHashed()
     {
+        $this->assertDoesntCache($this->url());
+
         $this->request($this->url())->assertStatus(200);
         $this->request($this->url())->assertStatus(200);
         $this->request($this->url())->assertStatus(200);
@@ -46,10 +48,14 @@ class CheckLastModifiedTest extends TestCase
         $this->request($this->url(), $this->tomorrow())->assertStatus(200);
         $this->request($this->url(), $this->tomorrow())->assertStatus(200);
         $this->request($this->url(), $this->tomorrow())->assertStatus(200);
+
+        $this->assertHasCache($this->url());
     }
 
     public function testDoesntHash()
     {
+        $this->assertDoesntCache($this->url());
+
         $this->request($this->url())->assertStatus(200);
         $this->request($this->url())->assertStatus(200);
         $this->request($this->url())->assertStatus(200);
@@ -69,5 +75,7 @@ class CheckLastModifiedTest extends TestCase
         $this->request($this->url(), $this->tomorrow())->assertStatus(200);
         $this->request($this->url(), $this->tomorrow())->assertStatus(200);
         $this->request($this->url(), $this->tomorrow())->assertStatus(200);
+
+        $this->assertDoesntCache($this->url());
     }
 }
