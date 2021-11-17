@@ -24,21 +24,23 @@ use Illuminate\Database\Schema\Blueprint;
 /**
  * @deprecated Will be deleted since 3.0 version.
  */
-class ChangeLastModifiedTableAddPrimaryIndex extends Migration
+class DeleteLastModifiedTable extends Migration
 {
     use Database;
 
     public function up()
     {
-        $this->schema()->table($this->table(), function (Blueprint $table) {
-            $table->primary('key');
-        });
+        $this->schema()->dropIfExists($this->table());
     }
 
     public function down()
     {
-        $this->schema()->table($this->table(), function (Blueprint $table) {
-            $table->dropPrimary('key');
+        $this->schema()->create($this->table(), function (Blueprint $table) {
+            $table->string('hash')->unique()->primary();
+
+            $table->text('url')->nullable()->after('key');
+
+            $table->timestamp('updated_at');
         });
     }
 }

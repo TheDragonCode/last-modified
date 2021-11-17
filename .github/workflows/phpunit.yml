@@ -9,11 +9,11 @@ jobs:
             fail-fast: true
             matrix:
                 php: [ "7.3", "7.4", "8.0" ]
-                laravel:
-                    - laravel/framework:^7.0 doctrine/dbal:^2.6
-                    - laravel/framework:^8.0 doctrine/dbal:^3.0
+                packages:
+                    - { "laravel": "7.0", "doctrine": "2.6" }
+                    - { "laravel": "8.0", "doctrine": "3.0" }
 
-        name: php ${{ matrix.php }}, ${{ matrix.laravel }}
+        name: PHP ${{ matrix.php }}, L ${{ matrix.packages.laravel }}, D ${{ matrix.packages.doctrine }}
 
         services:
             mysql:
@@ -29,6 +29,9 @@ jobs:
             -   name: Checkout code
                 uses: actions/checkout@v2
 
+            -   name: Setup Redis
+                uses: zhulik/redis-action@1.1.0
+
             -   name: Setup PHP
                 uses: shivammathur/setup-php@v2
                 with:
@@ -37,7 +40,7 @@ jobs:
                     coverage: none
 
             -   name: Install dependencies
-                run: composer require --dev ${{ matrix.laravel }}
+                run: composer require --dev laravel/framework:^${{ matrix.packages.laravel }} doctrine/dbal:^${{ matrix.packages.doctrine }}
 
             -   name: Execute tests
                 run: sudo vendor/bin/phpunit

@@ -34,13 +34,11 @@ class CheckerTest extends TestCase
 
     public function testRequest()
     {
-        $this->assertDatabaseCount($this->table(), 0, $this->connection());
-
         $checker1 = Checker::make($this->requestInstance());
         $this->assertFalse($checker1->isNotModified());
         $this->assertNull($checker1->getDate());
 
-        $this->fakeModel();
+        $this->fakeCache();
 
         $checker2 = Checker::make($this->requestInstance());
         $this->assertFalse($checker2->isNotModified());
@@ -57,7 +55,5 @@ class CheckerTest extends TestCase
         $checker5 = Checker::make($this->requestInstance($this->yesterday()));
         $this->assertFalse($checker5->isNotModified());
         $this->assertSame($this->today()->toIso8601String(), $checker5->getDate()->toIso8601String());
-
-        $this->assertDatabaseCount($this->table(), 1, $this->connection());
     }
 }

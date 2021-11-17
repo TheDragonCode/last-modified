@@ -2,12 +2,11 @@
 
 <img src="https://preview.dragon-code.pro/TheDragonCode/last-modified.svg?brand=laravel" alt="Laravel Last Modified"/>
 
-<p align="center">
-    <a href="https://packagist.org/packages/dragon-code/last-modified"><img src="https://img.shields.io/packagist/dt/dragon-code/last-modified.svg?style=flat-square" alt="Total Downloads" /></a>
-    <a href="https://packagist.org/packages/dragon-code/last-modified"><img src="https://poser.pugx.org/dragon-code/last-modified/v/stable?format=flat-square" alt="Latest Stable Version" /></a>
-    <a href="https://packagist.org/packages/dragon-code/last-modified"><img src="https://poser.pugx.org/dragon-code/last-modified/v/unstable?format=flat-square" alt="Latest Unstable Version" /></a>
-    <a href="LICENSE"><img src="https://poser.pugx.org/dragon-code/last-modified/license?format=flat-square" alt="License" /></a>
-</p>
+[![Stable Version][badge_stable]][link_packagist]
+[![Unstable Version][badge_unstable]][link_packagist]
+[![Total Downloads][badge_downloads]][link_packagist]
+[![Github Workflow Status][badge_build]][link_build]
+[![License][badge_license]][link_license]
 
 > Setting the response code 304 Not Modified in the absence of content changes.
 
@@ -220,3 +219,20 @@ class ObserverServiceProvider extends ServiceProvider
 ## License
 
 This package is licensed under the [MIT License](LICENSE).
+
+
+[badge_build]:          https://img.shields.io/github/workflow/status/TheDragonCode/last-modified/phpunit?style=flat-square
+
+[badge_downloads]:      https://img.shields.io/packagist/dt/dragon-code/last-modified.svg?style=flat-square
+
+[badge_license]:        https://img.shields.io/packagist/l/dragon-code/last-modified.svg?style=flat-square
+
+[badge_stable]:         https://img.shields.io/github/v/release/TheDragonCode/last-modified?label=stable&style=flat-square
+
+[badge_unstable]:       https://img.shields.io/badge/unstable-dev--main-orange?style=flat-square
+
+[link_build]:           https://github.com/TheDragonCode/last-modified/actions
+
+[link_license]:         LICENSE
+
+[link_packagist]:       https://packagist.org/packages/dragon-code/last-modified

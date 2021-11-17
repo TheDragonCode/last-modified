@@ -19,26 +19,34 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use DragonCode\LastModified\Concerns\Migrations\Database;
+use DragonCode\LastModified\Concerns\Cacheable;
 use DragonCode\LastModified\Middlewares\CheckLastModified;
 use DragonCode\LastModified\ServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 use Tests\Concerns\Fakeable;
+use Tests\Concerns\Asserts;
 use Tests\Concerns\Requests;
 use Tests\Concerns\Urlable;
 use Tests\fixtures\Providers\TestServiceProvider;
 
 abstract class TestCase extends BaseTestCase
 {
-    use Concerns\Database;
-    use Database;
+    use Cacheable;
     use Fakeable;
+    use Asserts;
     use RefreshDatabase;
     use Requests;
     use Urlable;
 
     protected $enabled = true;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->artisan('cache:clear')->run();
+    }
 
     protected function getPackageProviders($app): array
     {

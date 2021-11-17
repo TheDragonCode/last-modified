@@ -25,13 +25,13 @@ class CheckLastModifiedTest extends TestCase
 {
     public function testHashed()
     {
-        $this->assertDatabaseCount($this->table(), 0, $this->connection());
+        $this->assertDoesntCache($this->url());
 
         $this->request($this->url())->assertStatus(200);
         $this->request($this->url())->assertStatus(200);
         $this->request($this->url())->assertStatus(200);
 
-        $this->fakeModel();
+        $this->fakeCache();
 
         $this->request($this->url())->assertStatus(200);
         $this->request($this->url())->assertStatus(200);
@@ -49,12 +49,12 @@ class CheckLastModifiedTest extends TestCase
         $this->request($this->url(), $this->tomorrow())->assertNoContent(304);
         $this->request($this->url(), $this->tomorrow())->assertNoContent(304);
 
-        $this->assertDatabaseCount($this->table(), 1, $this->connection());
+        $this->assertHasCache($this->url());
     }
 
     public function testDoesntHash()
     {
-        $this->assertDatabaseCount($this->table(), 0, $this->connection());
+        $this->assertDoesntCache($this->url());
 
         $this->request($this->url())->assertStatus(200);
         $this->request($this->url())->assertStatus(200);
@@ -76,6 +76,6 @@ class CheckLastModifiedTest extends TestCase
         $this->request($this->url(), $this->tomorrow())->assertStatus(200);
         $this->request($this->url(), $this->tomorrow())->assertStatus(200);
 
-        $this->assertDatabaseCount($this->table(), 0, $this->connection());
+        $this->assertDoesntCache($this->url());
     }
 }

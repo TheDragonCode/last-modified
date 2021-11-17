@@ -35,11 +35,21 @@ class Config
         return ! $this->enabled();
     }
 
+    /**
+     * @deprecated Will be deleted since 3.0 version.
+     *
+     * @return string
+     */
     public function databaseConnection(): string
     {
         return config('last_modified.database.connection');
     }
 
+    /**
+     * @deprecated Will be deleted since 3.0 version.
+     *
+     * @return string
+     */
     public function databaseTable(): string
     {
         return config('last_modified.database.table');
@@ -49,6 +59,18 @@ class Config
     {
         $value = config('last_modified.database.chunk', 1000);
 
-        return abs($value) > 1 ? abs($value) : 1000;
+        return $this->getInteger($value, 1000);
+    }
+
+    public function cacheTtl(): int
+    {
+        $value = config('last_modified.cache.ttl', 43200);
+
+        return $this->getInteger($value, 43200);
+    }
+
+    protected function getInteger(int $value, int $default): int
+    {
+        return abs($value) > 1 ? abs($value) : $default;
     }
 }

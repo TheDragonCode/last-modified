@@ -28,26 +28,22 @@ class ToDeleteTest extends TestCase
 {
     public function testCollectionModels()
     {
-        $this->assertDatabaseCount($this->table(), 0, $this->connection());
+        $fakes = $this->fakeCustom(30);
 
-        $collection = $this->fakeCustom(30);
-
-        $this->assertDatabaseCount($this->table(), 30, $this->connection());
+        $this->assertHasManyCache($fakes);
 
         LastModified::make()
-            ->collections($collection)
+            ->collections($fakes)
             ->delete();
 
-        $this->assertDatabaseCount($this->table(), 0, $this->connection());
+        $this->assertDoesntManyCache($fakes);
     }
 
     public function testCollectionBuilders()
     {
-        $this->assertDatabaseCount($this->table(), 0, $this->connection());
+        $fakes = $this->fakeCustom(30);
 
-        $this->fakeCustom(30);
-
-        $this->assertDatabaseCount($this->table(), 30, $this->connection());
+        $this->assertHasManyCache($fakes);
 
         $builder = Custom::query();
 
@@ -57,18 +53,16 @@ class ToDeleteTest extends TestCase
             ->collections($collection)
             ->delete();
 
-        $this->assertDatabaseCount($this->table(), 0, $this->connection());
+        $this->assertDoesntManyCache($fakes);
     }
 
     public function testCollectionManual()
     {
-        $this->assertDatabaseCount($this->table(), 0, $this->connection());
+        $fakes = $this->fakeCustom(30);
 
-        $collection = $this->fakeCustom(30);
+        $this->assertHasManyCache($fakes);
 
-        $this->assertDatabaseCount($this->table(), 30, $this->connection());
-
-        $manual = $collection->map(static function (Custom $custom) {
+        $manual = $fakes->map(static function (Custom $custom) {
             return Item::make($custom->only(['url', 'updated_at']));
         });
 
@@ -76,16 +70,14 @@ class ToDeleteTest extends TestCase
             ->collections($manual)
             ->delete();
 
-        $this->assertDatabaseCount($this->table(), 0, $this->connection());
+        $this->assertDoesntManyCache($fakes);
     }
 
     public function testBuilders()
     {
-        $this->assertDatabaseCount($this->table(), 0, $this->connection());
+        $fakes = $this->fakeCustom(100);
 
-        $this->fakeCustom(100);
-
-        $this->assertDatabaseCount($this->table(), 100, $this->connection());
+        $this->assertHasManyCache($fakes);
 
         $builder = Custom::query();
 
@@ -93,37 +85,33 @@ class ToDeleteTest extends TestCase
             ->builders($builder)
             ->delete();
 
-        $this->assertDatabaseCount($this->table(), 0, $this->connection());
+        $this->assertDoesntManyCache($fakes);
     }
 
     public function testModels()
     {
-        $this->assertDatabaseCount($this->table(), 0, $this->connection());
+        $fakes = $this->fakeCustom(3);
 
-        $collection = $this->fakeCustom(3);
+        $this->assertHasManyCache($fakes);
 
-        $this->assertDatabaseCount($this->table(), 3, $this->connection());
-
-        $model1 = $collection->get(0);
-        $model2 = $collection->get(1);
-        $model3 = $collection->get(2);
+        $model1 = $fakes->get(0);
+        $model2 = $fakes->get(1);
+        $model3 = $fakes->get(2);
 
         LastModified::make()
             ->models($model1, $model2, $model3)
             ->delete();
 
-        $this->assertDatabaseCount($this->table(), 0, $this->connection());
+        $this->assertDoesntManyCache($fakes);
     }
 
     public function testManual()
     {
-        $this->assertDatabaseCount($this->table(), 0, $this->connection());
+        $fakes = $this->fakeCustom(2);
 
-        $collection = $this->fakeCustom(2);
+        $this->assertHasManyCache($fakes);
 
-        $this->assertDatabaseCount($this->table(), 2, $this->connection());
-
-        $manual = $collection->map(function (Custom $custom) {
+        $manual = $fakes->map(function (Custom $custom) {
             return Item::make($custom->only(['url', 'updated_at']));
         });
 
@@ -131,6 +119,6 @@ class ToDeleteTest extends TestCase
             ->manual($manual[0], $manual[1])
             ->delete();
 
-        $this->assertDatabaseCount($this->table(), 0, $this->connection());
+        $this->assertDoesntManyCache($fakes);
     }
 }

@@ -23,18 +23,36 @@ use DragonCode\LastModified\Facades\Config;
 use Illuminate\Database\Schema\Builder;
 use Illuminate\Support\Facades\Schema;
 
+/**
+ * @deprecated Will be deleted since 3.0 version.
+ */
 trait Database
 {
+    /**
+     * @deprecated Will be deleted since 3.0 version.
+     *
+     * @return string
+     */
     protected function connection(): string
     {
         return Config::databaseConnection();
     }
 
+    /**
+     * @deprecated Will be deleted since 3.0 version.
+     *
+     * @return string
+     */
     protected function table(): string
     {
         return Config::databaseTable();
     }
 
+    /**
+     * @deprecated Will be deleted since 3.0 version.
+     *
+     * @return \Illuminate\Database\Schema\Builder
+     */
     protected function schema(): Builder
     {
         return Schema::connection($this->connection());

@@ -25,9 +25,8 @@ use Illuminate\Support\Facades\Facade;
 /**
  * @method static bool disabled()
  * @method static bool enabled()
+ * @method static int cacheTtl()
  * @method static int databaseChunk()
- * @method static string databaseConnection()
- * @method static string databaseTable()
  */
 class Config extends Facade
 {

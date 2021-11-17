@@ -24,14 +24,9 @@ use Tests\WhenEnabled\TestCase;
 
 class ConfigTest extends TestCase
 {
-    public function testDatabaseConnection()
+    public function testEnabled()
     {
-        $this->assertSame('mysql', Config::databaseConnection());
-    }
-
-    public function testDatabaseTable()
-    {
-        $this->assertSame('last_modified', Config::databaseTable());
+        $this->assertTrue(Config::enabled());
     }
 
     public function testDisabled()
@@ -39,15 +34,17 @@ class ConfigTest extends TestCase
         $this->assertFalse(Config::disabled());
     }
 
-    public function testEnabled()
-    {
-        $this->assertTrue(Config::enabled());
-    }
-
     public function testDatabaseChunk()
     {
         $this->assertIsNumeric(Config::databaseChunk());
 
         $this->assertSame(20, Config::databaseChunk());
+    }
+
+    public function testCacheTtl()
+    {
+        $this->assertIsNumeric(Config::cacheTtl());
+
+        $this->assertSame(43200, Config::cacheTtl());
     }
 }
