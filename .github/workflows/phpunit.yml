@@ -29,6 +29,9 @@ jobs:
             -   name: Checkout code
                 uses: actions/checkout@v2
 
+            -   name: Setup Redis
+                uses: zhulik/redis-action@1
+
             -   name: Setup PHP
                 uses: shivammathur/setup-php@v2
                 with:
