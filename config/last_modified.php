@@ -28,4 +28,8 @@ return [
     'database' => [
         'chunk' => 1000,
     ],
+
+    'cache' => [
+        'ttl' => 24 * 60,
+    ],
 ];

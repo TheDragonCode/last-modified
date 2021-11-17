@@ -31,7 +31,13 @@ trait Cacheable
     protected function cache(string $key): Cache
     {
         return Cache::make()
-            ->tags('last_modified')
+            ->ttl($this->cacheTtl())
+            ->tags($this->cache_tag)
             ->key($key);
+    }
+
+    protected function cacheTtl(): int
+    {
+        return Config::cacheTtl();
     }
 }

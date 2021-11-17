@@ -41,4 +41,11 @@ class Config
 
         return abs($value) > 1 ? abs($value) : 1000;
     }
+
+    public function cacheTtl(): int
+    {
+        $value = config('last_modified.cache.ttl', 1440);
+
+        return abs($value) > 1 ? abs($value) : 1440;
+    }
 }
