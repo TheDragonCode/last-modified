@@ -32,6 +32,22 @@ return [
     'database' => [
 
         /*
+         * This option specifies the connection to the database.
+         *
+         * Deprecated since 4.0
+         */
+
+        'connection' => env('DB_CONNECTION', 'mysql'),
+
+        /*
+         * This option sets the name of the database table for storing URL hashes.
+         *
+         * Deprecated since 4.0
+         */
+
+        'table' => 'last_modified',
+
+        /*
          * This option determines the cardinality in a circular query.
          *
          * By default, 1000.
