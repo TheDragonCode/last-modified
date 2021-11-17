@@ -19,20 +19,18 @@ declare(strict_types=1);
 
 namespace DragonCode\LastModified\Concerns;
 
-use DragonCode\Support\Facades\Http\Builder;
+use DragonCode\LastModified\Facades\Url;
 use DragonCode\Support\Helpers\Http\Builder as BuilderService;
 
 trait Urlable
 {
     protected function parseUrl($url): BuilderService
     {
-        return Builder::parse($url);
+        return Url::parse($url);
     }
 
-    protected function hashUrl($uri): string
+    protected function hashUrl($url): string
     {
-        $url = $this->parseUrl($uri)->toUrl();
-
-        return md5($url);
+        return Url::hash($url);
     }
 }
