@@ -29,7 +29,12 @@ Instead, you may of course manually update your require block and run `composer 
 }
 ```
 
-And call `php artisan vendor:publish --provider="DragonCode\LastModified\ServiceProvider"` command, and `php artisan migrate` to create table in database.
+And call `php artisan vendor:publish --provider="DragonCode\LastModified\ServiceProvider"` command.
+
+> Note
+>
+> If you were using version 2.0 or less, run the `php artisan migrate` command.
+> If this is your first time here, then you do not need to install this command, since, starting from version [2.1](https://github.com/TheDragonCode/last-modified/releases/tag/v2.1.0), we refused to store data in the database, replacing the storage with a cache. 
 
 Next, add middleware in `$middlewareGroups > web` section in `app/Http/Kernel.php` file:
 
