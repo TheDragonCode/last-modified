@@ -31,6 +31,6 @@ class ToUpdate extends Processor
      */
     protected function handle(string $hash, UriInterface $url, DateTimeInterface $updated_at)
     {
-        $this->cachePut($hash, $updated_at->toIso8601String());
+        $this->cache($hash)->put($updated_at);
     }
 }

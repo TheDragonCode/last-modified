@@ -26,6 +26,6 @@ class ToDelete extends Processor
 {
     protected function handle(string $hash, UriInterface $url, DateTimeInterface $updated_at)
     {
-        $this->cacheForget($hash);
+        $this->cache($hash)->forget();
     }
 }

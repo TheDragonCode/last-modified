@@ -31,7 +31,7 @@ trait Fakeable
         $hash       = $this->hashUrl($this->url());
         $updated_at = $this->today();
 
-        $this->cachePut($hash, $updated_at);
+        $this->cache($hash)->put($updated_at);
     }
 
     protected function fakeCustom(int $count, bool $set_last = true): Collection
@@ -60,6 +60,6 @@ trait Fakeable
         $hash       = $this->hashUrl($model->url);
         $updated_at = $model->updated_at;
 
-        $this->cachePut($hash, $updated_at);
+        $this->cache($hash)->put($updated_at);
     }
 }

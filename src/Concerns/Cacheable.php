@@ -5,28 +5,11 @@ declare(strict_types=1);
 namespace DragonCode\LastModified\Concerns;
 
 use DragonCode\Cache\Services\Cache;
+use DragonCode\LastModified\Facades\Config;
 
 trait Cacheable
 {
-    protected function cachePut(string $key, $value): void
-    {
-        $this->cache($key)->put($value);
-    }
-
-    protected function cacheGet(string $key): string
-    {
-        return $this->cache($key)->get();
-    }
-
-    protected function cacheHas(string $key): bool
-    {
-        return $this->cache($key)->has();
-    }
-
-    protected function cacheForget(string $key): void
-    {
-        $this->cache($key)->forget();
-    }
+    protected $cache_tag = 'last_modified';
 
     protected function cache(string $key): Cache
     {
