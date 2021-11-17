@@ -26,7 +26,7 @@ use Tests\fixtures\Models\Custom;
 
 trait Fakeable
 {
-    protected function fakeModel(): void
+    protected function fakeCache(): void
     {
         $hash       = $this->hashUrl($this->url());
         $updated_at = $this->today();

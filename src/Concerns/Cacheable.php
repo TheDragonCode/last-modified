@@ -14,6 +14,7 @@ trait Cacheable
     protected function cache(string $key): Cache
     {
         return Cache::make()
+            ->when($this->cacheEnabled())
             ->ttl($this->cacheTtl())
             ->tags($this->cache_tag)
             ->key($key);
@@ -22,5 +23,10 @@ trait Cacheable
     protected function cacheTtl(): int
     {
         return Config::cacheTtl();
+    }
+
+    protected function cacheEnabled(): bool
+    {
+        return Config::enabled();
     }
 }

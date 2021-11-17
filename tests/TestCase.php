@@ -38,6 +38,13 @@ abstract class TestCase extends BaseTestCase
 
     protected $enabled = true;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->artisan('cache:clear')->run();
+    }
+
     protected function getPackageProviders($app): array
     {
         return [ServiceProvider::class];

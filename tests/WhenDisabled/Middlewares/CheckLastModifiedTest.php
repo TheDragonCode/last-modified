@@ -31,7 +31,7 @@ class CheckLastModifiedTest extends TestCase
         $this->request($this->url())->assertStatus(200);
         $this->request($this->url())->assertStatus(200);
 
-        $this->fakeModel();
+        $this->fakeCache();
 
         $this->request($this->url())->assertStatus(200);
         $this->request($this->url())->assertStatus(200);
@@ -49,7 +49,7 @@ class CheckLastModifiedTest extends TestCase
         $this->request($this->url(), $this->tomorrow())->assertStatus(200);
         $this->request($this->url(), $this->tomorrow())->assertStatus(200);
 
-        $this->assertHasCache($this->url());
+        $this->assertDoesntCache($this->url());
     }
 
     public function testDoesntHash()

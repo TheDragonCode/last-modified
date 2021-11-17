@@ -38,22 +38,22 @@ class CheckerTest extends TestCase
         $this->assertFalse($checker1->isNotModified());
         $this->assertNull($checker1->getDate());
 
-        $this->fakeModel();
+        $this->fakeCache();
 
         $checker2 = Checker::make($this->requestInstance());
         $this->assertFalse($checker2->isNotModified());
-        $this->assertSame($this->today()->toIso8601String(), $checker2->getDate()->toIso8601String());
+        $this->assertNull($checker2->getDate());
 
         $checker3 = Checker::make($this->requestInstance($this->today()));
-        $this->assertTrue($checker3->isNotModified());
-        $this->assertSame($this->today()->toIso8601String(), $checker3->getDate()->toIso8601String());
+        $this->assertFalse($checker3->isNotModified());
+        $this->assertNull($checker3->getDate());
 
         $checker4 = Checker::make($this->requestInstance($this->tomorrow()));
-        $this->assertTrue($checker4->isNotModified());
-        $this->assertSame($this->today()->toIso8601String(), $checker4->getDate()->toIso8601String());
+        $this->assertFalse($checker4->isNotModified());
+        $this->assertNull($checker4->getDate());
 
         $checker5 = Checker::make($this->requestInstance($this->yesterday()));
         $this->assertFalse($checker5->isNotModified());
-        $this->assertSame($this->today()->toIso8601String(), $checker5->getDate()->toIso8601String());
+        $this->assertNull($checker5->getDate());
     }
 }
