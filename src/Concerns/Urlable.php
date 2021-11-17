@@ -33,6 +33,6 @@ trait Urlable
     {
         $url = $this->parseUrl($uri)->toUrl();
 
-        return md5(trim($url));
+        return md5($url);
     }
 }
