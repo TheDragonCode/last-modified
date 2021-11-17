@@ -35,16 +35,6 @@ class Config
         return ! $this->enabled();
     }
 
-    public function databaseConnection(): string
-    {
-        return config('last_modified.database.connection');
-    }
-
-    public function databaseTable(): string
-    {
-        return config('last_modified.database.table');
-    }
-
     public function databaseChunk(): int
     {
         $value = config('last_modified.database.chunk', 1000);

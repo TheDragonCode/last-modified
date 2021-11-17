@@ -20,8 +20,8 @@ declare(strict_types=1);
 namespace DragonCode\LastModified\Services;
 
 use DateTimeInterface;
+use DragonCode\LastModified\Concerns\Cacheable;
 use DragonCode\LastModified\Concerns\Urlable;
-use DragonCode\LastModified\Models\Model;
 use DragonCode\Support\Concerns\Makeable;
 use Illuminate\Http\Request;
 
@@ -30,8 +30,9 @@ use Illuminate\Http\Request;
  */
 class Checker
 {
-    use Urlable;
+    use Cacheable;
     use Makeable;
+    use Urlable;
 
     protected $request;
 
@@ -68,20 +69,13 @@ class Checker
             return null;
         }
 
-        if ($model = $this->find()) {
-            return $model->updated_at;
-        }
-
-        return null;
+        return $this->find();
     }
 
-    /**
-     * @return \DragonCode\LastModified\Models\Model|\Illuminate\Database\Eloquent\Model|null
-     */
-    protected function find(): ?Model
+    protected function find(): ?DateTimeInterface
     {
         if (! empty($this->hash)) {
-            return Model::query()->find($this->hash);
+            return $this->cache($this->hash)->get();
         }
 
         return null;

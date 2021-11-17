@@ -28,11 +28,7 @@ class ToUpdateTest extends TestCase
 {
     public function testCollectionModels()
     {
-        $this->assertDatabaseCount($this->table(), 0, $this->connection());
-
         $this->fakeCustom(30);
-
-        $this->assertDatabaseCount($this->table(), 30, $this->connection());
 
         $this->assertSame(30, $this->db()->where('updated_at', $this->today())->count());
         $this->assertSame(0, $this->db()->where('updated_at', $this->yesterday())->count());
@@ -51,11 +47,7 @@ class ToUpdateTest extends TestCase
 
     public function testCollectionBuilders()
     {
-        $this->assertDatabaseCount($this->table(), 0, $this->connection());
-
         $this->fakeCustom(30);
-
-        $this->assertDatabaseCount($this->table(), 30, $this->connection());
 
         $this->assertSame(30, $this->db()->where('updated_at', $this->today())->count());
         $this->assertSame(0, $this->db()->where('updated_at', $this->yesterday())->count());
@@ -76,11 +68,7 @@ class ToUpdateTest extends TestCase
 
     public function testCollectionManual()
     {
-        $this->assertDatabaseCount($this->table(), 0, $this->connection());
-
         $this->fakeCustom(30);
-
-        $this->assertDatabaseCount($this->table(), 30, $this->connection());
 
         $this->assertSame(30, $this->db()->where('updated_at', $this->today())->count());
         $this->assertSame(0, $this->db()->where('updated_at', $this->yesterday())->count());
@@ -101,11 +89,7 @@ class ToUpdateTest extends TestCase
 
     public function testBuilders()
     {
-        $this->assertDatabaseCount($this->table(), 0, $this->connection());
-
         $this->fakeCustom(100);
-
-        $this->assertDatabaseCount($this->table(), 100, $this->connection());
 
         $this->assertSame(100, $this->db()->where('updated_at', $this->today())->count());
         $this->assertSame(0, $this->db()->where('updated_at', $this->yesterday())->count());
@@ -124,11 +108,7 @@ class ToUpdateTest extends TestCase
 
     public function testModels()
     {
-        $this->assertDatabaseCount($this->table(), 0, $this->connection());
-
         $this->fakeCustom(3);
-
-        $this->assertDatabaseCount($this->table(), 3, $this->connection());
 
         $this->assertSame(3, $this->db()->where('updated_at', $this->today())->count());
         $this->assertSame(0, $this->db()->where('updated_at', $this->yesterday())->count());
@@ -151,11 +131,7 @@ class ToUpdateTest extends TestCase
 
     public function testManual()
     {
-        $this->assertDatabaseCount($this->table(), 0, $this->connection());
-
         $this->fakeCustom(2);
-
-        $this->assertDatabaseCount($this->table(), 2, $this->connection());
 
         $this->assertSame(2, $this->db()->where('updated_at', $this->today())->count());
         $this->assertSame(0, $this->db()->where('updated_at', $this->yesterday())->count());

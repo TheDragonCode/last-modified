@@ -24,16 +24,6 @@ use Tests\WhenEnabled\TestCase;
 
 class ConfigTest extends TestCase
 {
-    public function testDatabaseConnection()
-    {
-        $this->assertSame('mysql', Config::databaseConnection());
-    }
-
-    public function testDatabaseTable()
-    {
-        $this->assertSame('last_modified', Config::databaseTable());
-    }
-
     public function testDisabled()
     {
         $this->assertFalse(Config::disabled());

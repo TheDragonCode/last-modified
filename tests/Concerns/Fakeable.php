@@ -19,7 +19,6 @@ declare(strict_types=1);
 
 namespace Tests\Concerns;
 
-use DragonCode\LastModified\Models\Model;
 use DragonCode\Support\Facades\Helpers\Str;
 use Illuminate\Database\Eloquent\Model as BaseModel;
 use Illuminate\Support\Collection;
@@ -29,11 +28,10 @@ trait Fakeable
 {
     protected function fakeModel(): void
     {
-        Model::query()->create([
-            'hash'       => $this->hashUrl($this->url()),
-            'url'        => $this->url(),
-            'updated_at' => $this->today(),
-        ]);
+        $hash       = $this->hashUrl($this->url());
+        $updated_at = $this->today();
+
+        $this->cachePut($hash, $updated_at);
     }
 
     protected function fakeCustom(int $count, bool $set_last = true): Collection
@@ -60,9 +58,8 @@ trait Fakeable
     protected function setFakeLastModified(BaseModel $model): void
     {
         $hash       = $this->hashUrl($model->url);
-        $url        = $model->url;
         $updated_at = $model->updated_at;
 
-        Model::create(compact('hash', 'url', 'updated_at'));
+        $this->cachePut($hash, $updated_at);
     }
 }

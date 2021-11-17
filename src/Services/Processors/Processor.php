@@ -20,6 +20,7 @@ declare(strict_types=1);
 namespace DragonCode\LastModified\Services\Processors;
 
 use DateTimeInterface;
+use DragonCode\LastModified\Concerns\Cacheable;
 use DragonCode\LastModified\Concerns\Urlable;
 use DragonCode\LastModified\Facades\Config;
 use DragonCode\LastModified\Resources\Item;
@@ -33,6 +34,7 @@ use Psr\Http\Message\UriInterface;
 
 abstract class Processor
 {
+    use Cacheable;
     use Makeable;
     use Urlable;
 

@@ -26,10 +26,6 @@ return [
     'enabled' => env('LAST_MODIFIED_ENABLED', true),
 
     'database' => [
-        'connection' => env('DB_CONNECTION', 'mysql'),
-
-        'table' => 'last_modified',
-
         'chunk' => 1000,
     ],
 ];

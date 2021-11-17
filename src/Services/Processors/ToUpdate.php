@@ -20,16 +20,17 @@ declare(strict_types=1);
 namespace DragonCode\LastModified\Services\Processors;
 
 use DateTimeInterface;
-use DragonCode\LastModified\Models\Model as LastModel;
 use Psr\Http\Message\UriInterface;
 
 class ToUpdate extends Processor
 {
+    /**
+     * @param  string  $hash
+     * @param  \Psr\Http\Message\UriInterface  $url
+     * @param  \DateTimeInterface|\Carbon\Carbon  $updated_at
+     */
     protected function handle(string $hash, UriInterface $url, DateTimeInterface $updated_at)
     {
-        LastModel::query()->updateOrCreate(
-            compact('hash'),
-            compact('url', 'updated_at')
-        );
+        $this->cachePut($hash, $updated_at->toIso8601String());
     }
 }
