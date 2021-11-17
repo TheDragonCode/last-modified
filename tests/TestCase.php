@@ -22,17 +22,20 @@ namespace Tests;
 use DragonCode\LastModified\Concerns\Cacheable;
 use DragonCode\LastModified\Middlewares\CheckLastModified;
 use DragonCode\LastModified\ServiceProvider;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 use Tests\Concerns\Fakeable;
-use Tests\Concerns\Has;
+use Tests\Concerns\Asserts;
 use Tests\Concerns\Requests;
 use Tests\Concerns\Urlable;
+use Tests\fixtures\Providers\TestServiceProvider;
 
 abstract class TestCase extends BaseTestCase
 {
     use Cacheable;
     use Fakeable;
-    use Has;
+    use Asserts;
+    use RefreshDatabase;
     use Requests;
     use Urlable;
 
@@ -47,7 +50,10 @@ abstract class TestCase extends BaseTestCase
 
     protected function getPackageProviders($app): array
     {
-        return [ServiceProvider::class];
+        return [
+            ServiceProvider::class,
+            TestServiceProvider::class,
+        ];
     }
 
     protected function getEnvironmentSetUp($app): void

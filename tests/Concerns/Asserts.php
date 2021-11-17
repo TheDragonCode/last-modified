@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Concerns;
 
+use Carbon\Carbon;
+use DateTimeInterface;
 use Illuminate\Support\Collection;
 
-trait Has
+trait Asserts
 {
     protected function assertHasCache(string $url): void
     {
@@ -22,10 +24,14 @@ trait Has
         $this->assertFalse($this->cache($hash)->has());
     }
 
-    protected function assertHasManyCache(Collection $collection): void
+    protected function assertHasManyCache(Collection $collection, ?Carbon $date = null): void
     {
-        $collection->each(function ($item) {
+        $collection->each(function ($item) use ($date) {
             $this->assertHasCache($item->url);
+
+            if (! empty($date)) {
+                $this->assertSameDate($date, $item->updated_at);
+            }
         });
     }
 
@@ -34,5 +40,10 @@ trait Has
         $collection->each(function ($item) {
             $this->assertDoesntCache($item->url);
         });
+    }
+
+    protected function assertSameDate(?DateTimeInterface $expected, ?DateTimeInterface $actual): void
+    {
+        $this->assertSame($expected->toIso8601String(), $actual->toIso8601String());
     }
 }

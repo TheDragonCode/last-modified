@@ -34,7 +34,7 @@ return [
         /*
          * This option specifies the connection to the database.
          *
-         * Deprecated since 4.0
+         * Deprecated since 3.0
          */
 
         'connection' => env('DB_CONNECTION', 'mysql'),
@@ -42,7 +42,7 @@ return [
         /*
          * This option sets the name of the database table for storing URL hashes.
          *
-         * Deprecated since 4.0
+         * Deprecated since 3.0
          */
 
         'table' => 'last_modified',

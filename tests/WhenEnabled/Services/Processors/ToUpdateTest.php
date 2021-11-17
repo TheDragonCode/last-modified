@@ -28,10 +28,9 @@ class ToUpdateTest extends TestCase
 {
     public function testCollectionModels()
     {
-        $this->fakeCustom(30);
+        $fakes = $this->fakeCustom(30);
 
-        $this->assertSame(30, $this->db()->where('updated_at', $this->today())->count());
-        $this->assertSame(0, $this->db()->where('updated_at', $this->yesterday())->count());
+        $this->assertHasManyCache($fakes, $this->today());
 
         Custom::query()->update(['updated_at' => $this->yesterday()]);
 
@@ -39,16 +38,14 @@ class ToUpdateTest extends TestCase
 
         ToUpdate::make()->collections($collection);
 
-        $this->assertSame(0, $this->db()->where('updated_at', $this->today())->count());
-        $this->assertSame(30, $this->db()->where('updated_at', $this->yesterday())->count());
+        $this->assertHasManyCache($collection, $this->yesterday());
     }
 
     public function testCollectionBuilders()
     {
-        $this->fakeCustom(30);
+        $fakes = $this->fakeCustom(30);
 
-        $this->assertSame(30, $this->db()->where('updated_at', $this->today())->count());
-        $this->assertSame(0, $this->db()->where('updated_at', $this->yesterday())->count());
+        $this->assertHasManyCache($fakes, $this->today());
 
         $builder = Custom::query();
 
@@ -58,16 +55,14 @@ class ToUpdateTest extends TestCase
 
         ToUpdate::make()->collections($collection);
 
-        $this->assertSame(0, $this->db()->where('updated_at', $this->today())->count());
-        $this->assertSame(30, $this->db()->where('updated_at', $this->yesterday())->count());
+        $this->assertHasManyCache($builder->get(), $this->yesterday());
     }
 
     public function testCollectionManual()
     {
-        $this->fakeCustom(30);
+        $fakes = $this->fakeCustom(30);
 
-        $this->assertSame(30, $this->db()->where('updated_at', $this->today())->count());
-        $this->assertSame(0, $this->db()->where('updated_at', $this->yesterday())->count());
+        $this->assertHasManyCache($fakes, $this->today());
 
         Custom::query()->update(['updated_at' => $this->yesterday()]);
 
@@ -77,16 +72,16 @@ class ToUpdateTest extends TestCase
 
         ToUpdate::make()->collections($manual);
 
-        $this->assertSame(0, $this->db()->where('updated_at', $this->today())->count());
-        $this->assertSame(30, $this->db()->where('updated_at', $this->yesterday())->count());
+        $fakes->each->refresh();
+
+        $this->assertHasManyCache($fakes, $this->yesterday());
     }
 
     public function testBuilders()
     {
-        $this->fakeCustom(100);
+        $fakes = $this->fakeCustom(100);
 
-        $this->assertSame(100, $this->db()->where('updated_at', $this->today())->count());
-        $this->assertSame(0, $this->db()->where('updated_at', $this->yesterday())->count());
+        $this->assertHasManyCache($fakes, $this->today());
 
         $builder = Custom::query();
 
@@ -94,16 +89,14 @@ class ToUpdateTest extends TestCase
 
         ToUpdate::make()->builders($builder);
 
-        $this->assertSame(0, $this->db()->where('updated_at', $this->today())->count());
-        $this->assertSame(100, $this->db()->where('updated_at', $this->yesterday())->count());
+        $this->assertHasManyCache($builder->get(), $this->yesterday());
     }
 
     public function testModels()
     {
-        $this->fakeCustom(3);
+        $fakes = $this->fakeCustom(3);
 
-        $this->assertSame(3, $this->db()->where('updated_at', $this->today())->count());
-        $this->assertSame(0, $this->db()->where('updated_at', $this->yesterday())->count());
+        $this->assertHasManyCache($fakes, $this->today());
 
         Custom::query()->update(['updated_at' => $this->yesterday()]);
 
@@ -115,16 +108,14 @@ class ToUpdateTest extends TestCase
 
         ToUpdate::make()->models($model1, $model2, $model3);
 
-        $this->assertSame(0, $this->db()->where('updated_at', $this->today())->count());
-        $this->assertSame(3, $this->db()->where('updated_at', $this->yesterday())->count());
+        $this->assertHasManyCache($collection, $this->yesterday());
     }
 
     public function testManual()
     {
-        $this->fakeCustom(2);
+        $fakes = $this->fakeCustom(2);
 
-        $this->assertSame(2, $this->db()->where('updated_at', $this->today())->count());
-        $this->assertSame(0, $this->db()->where('updated_at', $this->yesterday())->count());
+        $this->assertHasManyCache($fakes, $this->today());
 
         Custom::query()->update(['updated_at' => $this->yesterday()]);
 
@@ -134,7 +125,8 @@ class ToUpdateTest extends TestCase
 
         ToUpdate::make()->manual($manual[0], $manual[1]);
 
-        $this->assertSame(0, $this->db()->where('updated_at', $this->today())->count());
-        $this->assertSame(2, $this->db()->where('updated_at', $this->yesterday())->count());
+        $fakes->each->refresh();
+
+        $this->assertHasManyCache($fakes, $this->yesterday());
     }
 }
