@@ -20,7 +20,6 @@ declare(strict_types=1);
 use DragonCode\LastModified\Concerns\Migrations\Database;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 
 class ChangeLastModifiedTableAddUrlColumn extends Migration
 {
@@ -28,14 +27,14 @@ class ChangeLastModifiedTableAddUrlColumn extends Migration
 
     public function up()
     {
-        Schema::table($this->table(), function (Blueprint $table) {
+        $this->schema()->table($this->table(), function (Blueprint $table) {
             $table->text('url')->nullable()->after('key');
         });
     }
 
     public function down()
     {
-        Schema::table($this->table(), function (Blueprint $table) {
+        $this->schema()->table($this->table(), function (Blueprint $table) {
             $table->dropColumn('url');
         });
     }
