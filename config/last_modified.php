@@ -90,6 +90,11 @@ return [
              *
              * For example,
              *   ['qwe', '*led', 'dat*', '*ifi*']
+             *
+             *   Before:
+             *     /?id=1&qwerty=2&amoled=3&database=4&modified=5
+             *   After:
+             *     /?id=1&qwerty=2
              */
             'keys' => [],
         ],
