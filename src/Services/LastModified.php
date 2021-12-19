@@ -22,6 +22,7 @@ namespace DragonCode\LastModified\Services;
 use DragonCode\LastModified\Facades\Config;
 use DragonCode\LastModified\Resources\Item;
 use DragonCode\LastModified\Services\Processors\ToDelete;
+use DragonCode\LastModified\Services\Processors\ToFlush;
 use DragonCode\LastModified\Services\Processors\ToUpdate;
 use DragonCode\Support\Concerns\Makeable;
 use Illuminate\Database\Eloquent\Builder;
@@ -87,6 +88,13 @@ class LastModified
                 ->builders(...$this->builders)
                 ->models(...$this->models)
                 ->manual(...$this->manual);
+        }
+    }
+
+    public function flush(): void
+    {
+        if ($this->enabled()) {
+            ToFlush::make()->clean();
         }
     }
 

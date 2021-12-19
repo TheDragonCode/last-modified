@@ -13,11 +13,20 @@ trait Cacheable
 
     protected function cache(string $key): Cache
     {
+        return $this->cacheInstance()->key($key);
+    }
+
+    protected function cacheFlush(): void
+    {
+        $this->cacheInstance()->forget();
+    }
+
+    protected function cacheInstance(): Cache
+    {
         return Cache::make()
             ->when($this->cacheEnabled())
             ->ttl($this->cacheTtl())
-            ->tags($this->cache_tag)
-            ->key($key);
+            ->tags($this->cache_tag);
     }
 
     protected function cacheTtl(): int

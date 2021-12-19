@@ -172,6 +172,16 @@ public function handle()
 }
 ```
 
+## Clean
+
+You can also completely delete all saved key labels with one command:
+
+```php
+use DragonCode\LastModified\Services\LastModified;
+
+LastModified::make()->flush();
+```
+
 ## Observer
 
 In order to reduce the load on the database and free up the crown queue, it is recommended to use the observer to update the records:
