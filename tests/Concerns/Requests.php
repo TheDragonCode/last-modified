@@ -42,10 +42,13 @@ trait Requests
 
     protected function requestInstance(Carbon $date = null): Request
     {
-        $server = ! empty($date)
-            ? ['HTTP_If-Modified-Since' => $date->format('r')]
-            : [];
+        $server = ! empty($date) ? $this->getRequestDateHeader($date) : [];
 
         return Request::create($this->url(), 'GET', [], [], [], $server);
+    }
+
+    protected function getRequestDateHeader(Carbon $date): array
+    {
+        return ['HTTP_' . Header::IF_MODIFIED_SINCE => $date->format('r')];
     }
 }
