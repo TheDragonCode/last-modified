@@ -21,6 +21,7 @@ namespace Tests\Concerns;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Lmc\HttpConstants\Header;
 
 trait Requests
 {
@@ -33,7 +34,7 @@ trait Requests
     protected function request(string $url, Carbon $date = null)
     {
         if (! empty($date)) {
-            $this->withHeader('If-Modified-Since', $date->format('r'));
+            $this->withHeader(Header::IF_MODIFIED_SINCE, $date->format('r'));
         }
 
         return $this->get($url);
