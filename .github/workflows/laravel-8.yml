@@ -13,15 +13,28 @@ jobs:
 
         name: PHP ${{ matrix.php }}
 
+        services:
+            mysql:
+                image: mysql:5.7
+                env:
+                    MYSQL_ROOT_PASSWORD: root
+                    MYSQL_DATABASE: default
+                ports:
+                    - 3306:3306
+                options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
         steps:
             -   name: Checkout code
                 uses: actions/checkout@v2
+
+            -   name: Setup Redis
+                uses: zhulik/redis-action@1.1.0
 
             -   name: Setup PHP
                 uses: shivammathur/setup-php@v2
                 with:
                     php-version: ${{ matrix.php }}
-                    extensions: curl, mbstring, zip, pcntl, pdo, pdo_sqlite, iconv
+                    extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, gd, redis, pdo_mysql
                     coverage: none
 
             -   name: Install dependencies
@@ -29,3 +42,5 @@ jobs:
 
             -   name: Execute tests
                 run: sudo vendor/bin/phpunit
+                env:
+                    MYSQL_HOST: 127.0.0.1
