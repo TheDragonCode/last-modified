@@ -1,4 +1,4 @@
-name: phpunit
+name: "Laravel 8"
 on: [ push ]
 
 jobs:
@@ -8,12 +8,10 @@ jobs:
         strategy:
             fail-fast: true
             matrix:
-                php: [ "7.3", "7.4", "8.0" ]
-                packages:
-                    - { "laravel": "7.0", "doctrine": "2.6" }
-                    - { "laravel": "8.0", "doctrine": "3.0" }
+                php: [ "7.3", "7.4", "8.0", "8.1" ]
+                laravel: [ "8.0" ]
 
-        name: PHP ${{ matrix.php }}, L ${{ matrix.packages.laravel }}, D ${{ matrix.packages.doctrine }}
+        name: PHP ${{ matrix.php }}
 
         services:
             mysql:
@@ -40,7 +38,7 @@ jobs:
                     coverage: none
 
             -   name: Install dependencies
-                run: composer require --dev laravel/framework:^${{ matrix.packages.laravel }} doctrine/dbal:^${{ matrix.packages.doctrine }}
+                run: composer require --dev laravel/framework:^${{ matrix.laravel }} doctrine/dbal
 
             -   name: Execute tests
                 run: sudo vendor/bin/phpunit

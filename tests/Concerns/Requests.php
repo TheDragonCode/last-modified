@@ -21,11 +21,16 @@ namespace Tests\Concerns;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Testing\TestResponse;
 
 trait Requests
 {
-    protected function request(string $url, Carbon $date = null): TestResponse
+    /**
+     * @param  string  $url
+     * @param  \Carbon\Carbon|null  $date
+     *
+     * @return \Illuminate\Foundation\Testing\TestResponse|\Illuminate\Testing\TestResponse
+     */
+    protected function request(string $url, Carbon $date = null)
     {
         if (! empty($date)) {
             $this->withHeader('If-Modified-Since', $date->format('r'));
