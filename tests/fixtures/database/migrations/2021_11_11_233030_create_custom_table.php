@@ -26,7 +26,7 @@ class CreateCustomTable extends Migration
     public function up()
     {
         Schema::create('custom', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
 
             $table->string('slug');
 
