@@ -24,6 +24,7 @@ use DragonCode\LastModified\Concerns\Cacheable;
 use DragonCode\LastModified\Concerns\Urlable;
 use DragonCode\Support\Concerns\Makeable;
 use Illuminate\Http\Request;
+use Lmc\HttpConstants\Header;
 
 /**
  * @method static Checker make(Request $request = null)
@@ -83,7 +84,7 @@ class Checker
 
     protected function modifiedSince()
     {
-        return $this->request->headers->getDate('If-Modified-Since');
+        return $this->request->headers->getDate(Header::IF_MODIFIED_SINCE);
     }
 
     protected function doesntRequest(): bool

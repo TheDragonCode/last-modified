@@ -21,14 +21,20 @@ namespace Tests\Concerns;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Testing\TestResponse;
+use Lmc\HttpConstants\Header;
 
 trait Requests
 {
-    protected function request(string $url, Carbon $date = null): TestResponse
+    /**
+     * @param  string  $url
+     * @param  \Carbon\Carbon|null  $date
+     *
+     * @return \Illuminate\Foundation\Testing\TestResponse|\Illuminate\Testing\TestResponse
+     */
+    protected function request(string $url, Carbon $date = null)
     {
         if (! empty($date)) {
-            $this->withHeader('If-Modified-Since', $date->format('r'));
+            $this->withHeader(Header::IF_MODIFIED_SINCE, $date->format('r'));
         }
 
         return $this->get($url);
@@ -36,10 +42,13 @@ trait Requests
 
     protected function requestInstance(Carbon $date = null): Request
     {
-        $server = ! empty($date)
-            ? ['HTTP_If-Modified-Since' => $date->format('r')]
-            : [];
+        $server = ! empty($date) ? $this->getRequestDateHeader($date) : [];
 
         return Request::create($this->url(), 'GET', [], [], [], $server);
+    }
+
+    protected function getRequestDateHeader(Carbon $date): array
+    {
+        return ['HTTP_' . Header::IF_MODIFIED_SINCE => $date->format('r')];
     }
 }
