@@ -20,6 +20,7 @@ declare(strict_types=1);
 namespace Tests\Concerns;
 
 use Carbon\Carbon;
+use Fig\Http\Message\RequestMethodInterface;
 use Illuminate\Http\Request;
 use Lmc\HttpConstants\Header;
 
@@ -44,7 +45,7 @@ trait Requests
     {
         $server = ! empty($date) ? $this->getRequestDateHeader($date) : [];
 
-        return Request::create($this->url(), 'GET', [], [], [], $server);
+        return Request::create($this->url(), RequestMethodInterface::METHOD_GET, [], [], [], $server);
     }
 
     protected function getRequestDateHeader(Carbon $date): array
