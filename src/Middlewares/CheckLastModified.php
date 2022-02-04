@@ -20,6 +20,8 @@ namespace DragonCode\LastModified\Middlewares;
 use Closure;
 use DragonCode\LastModified\Facades\Config;
 use DragonCode\LastModified\Services\Checker;
+use Fig\Http\Message\RequestMethodInterface;
+use Fig\Http\Message\StatusCodeInterface;
 use Illuminate\Http\Request;
 
 class CheckLastModified
@@ -33,7 +35,7 @@ class CheckLastModified
         $service = $this->service($request);
 
         if ($service->isNotModified()) {
-            return response(null, 304);
+            return response(null, StatusCodeInterface::STATUS_NOT_MODIFIED);
         }
 
         return $this->setLastModified($request, $next, $service);
@@ -63,6 +65,11 @@ class CheckLastModified
     {
         $method = $request->getRealMethod();
 
-        return ! in_array($method, ['GET', 'HEAD'], true);
+        return ! in_array($method, $this->requestMethods(), true);
+    }
+
+    protected function requestMethods(): array
+    {
+        return [RequestMethodInterface::METHOD_GET, RequestMethodInterface::METHOD_HEAD];
     }
 }
