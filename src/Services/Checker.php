@@ -39,7 +39,7 @@ class Checker
 
     protected $hash;
 
-    public function __construct(Request $request = null)
+    public function __construct(?Request $request = null)
     {
         if (! empty($request)) {
             $this->request = $request;

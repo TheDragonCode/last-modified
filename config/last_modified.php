@@ -16,7 +16,6 @@
  */
 
 return [
-
     /*
      * This option determines if this plugin is allowed to work.
      *
@@ -25,12 +24,9 @@ return [
 
     'enabled' => env('LAST_MODIFIED_ENABLED', true),
 
-    /*
-     * This option sets the settings for working with the database.
-     */
+    // This option sets the settings for working with the database.
 
     'database' => [
-
         /*
          * This option specifies the connection to the database.
          *
@@ -56,12 +52,9 @@ return [
         'chunk' => 1000,
     ],
 
-    /*
-     * This option contains settings for working with the cache.
-     */
+    // This option contains settings for working with the cache.
 
     'cache' => [
-
         /*
          * This option sets the time in minutes to keep information in the cache.
          *
@@ -71,18 +64,12 @@ return [
         'ttl' => 43200,
     ],
 
-    /*
-     * This option contains settings for working with requests.
-     */
+    // This option contains settings for working with requests.
 
     'requests' => [
-
-        /*
-         * This option contains ignore settings.
-         */
+        // This option contains ignore settings.
 
         'ignore' => [
-
             /*
              * This option contains key patterns to be ignored when retrieving the hash.
              *

@@ -64,7 +64,7 @@ abstract class Processor
     }
 
     /**
-     * @param  \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder  ...$builders
+     * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder ...$builders
      *
      * @return $this
      */

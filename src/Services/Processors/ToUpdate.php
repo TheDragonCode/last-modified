@@ -25,9 +25,9 @@ use Psr\Http\Message\UriInterface;
 class ToUpdate extends Processor
 {
     /**
-     * @param  string  $hash
-     * @param  \Psr\Http\Message\UriInterface  $url
-     * @param  \DateTimeInterface|\Carbon\Carbon  $updated_at
+     * @param string $hash
+     * @param \Psr\Http\Message\UriInterface $url
+     * @param DateTimeInterface|\Carbon\Carbon $updated_at
      */
     protected function handle(string $hash, UriInterface $url, DateTimeInterface $updated_at)
     {

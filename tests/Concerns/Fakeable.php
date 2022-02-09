@@ -38,7 +38,7 @@ trait Fakeable
     {
         $items = collect();
 
-        for ($i = 0; $i < $count; $i++) {
+        for ($i = 0; $i < $count; ++$i) {
             $slug = Str::random();
 
             $updated_at = $this->today();

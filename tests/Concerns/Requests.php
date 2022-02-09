@@ -27,12 +27,12 @@ use Lmc\HttpConstants\Header;
 trait Requests
 {
     /**
-     * @param  string  $url
-     * @param  \Carbon\Carbon|null  $date
+     * @param string $url
+     * @param \Carbon\Carbon|null $date
      *
      * @return \Illuminate\Foundation\Testing\TestResponse|\Illuminate\Testing\TestResponse
      */
-    protected function request(string $url, Carbon $date = null)
+    protected function request(string $url, ?Carbon $date = null)
     {
         if (! empty($date)) {
             $this->withHeader(Header::IF_MODIFIED_SINCE, $date->format('r'));
@@ -41,7 +41,7 @@ trait Requests
         return $this->get($url);
     }
 
-    protected function requestInstance(Carbon $date = null): Request
+    protected function requestInstance(?Carbon $date = null): Request
     {
         $server = ! empty($date) ? $this->getRequestDateHeader($date) : [];
 
