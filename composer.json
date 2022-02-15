@@ -27,7 +27,7 @@
         "php": "^7.3 || ^8.0",
         "doctrine/dbal": "^2.6 || ^3.0",
         "dragon-code/laravel-cache": "^2.3",
-        "dragon-code/simple-data-transfer-object": "^2.0",
+        "dragon-code/simple-dto": "^2.0",
         "dragon-code/support": "^5.2",
         "illuminate/console": "^6.0 || ^7.0 || ^8.0",
         "illuminate/database": "^6.0 || ^7.0 || ^8.0",
