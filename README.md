@@ -24,7 +24,7 @@ Instead, you may of course manually update your require block and run `composer 
 ```json
 {
     "require": {
-        "dragon-code/last-modified": "^2.0"
+        "dragon-code/last-modified": "^3.0"
     }
 }
 ```
