@@ -24,7 +24,7 @@ Instead, you may of course manually update your require block and run `composer 
 ```json
 {
     "require": {
-        "dragon-code/last-modified": "^3.0"
+        "dragon-code/last-modified": "^4.0"
     }
 }
 ```
@@ -55,42 +55,6 @@ key and returns either 200 or 304 code.
 
 To add records to the table, it is recommended to create a console command in your application using the following example:
 
-### Upgrade from `andrey-helldar/last-modified`
-
-1. Replace `"andrey-helldar/last-modified": "^1.0"` with `"dragon-code/last-modified": "^2.0"` in the `composer.json` file;
-2. If you don't use auto-discovery, replace the `Helldar\LastModified\ServiceProvider` with `DragonCode\LastModified\ServiceProvider`;
-3. Replace the `Helldar\LastModified\Middlewares\CheckLastModified` middleware with `DragonCode\LastModified\Middlewares\CheckLastModified`;
-4. Replace the `new Helldar\LastModified\Services\LastModified` class with `DragonCode\LastModified\Services\LastModified::make()`:
-   > Before:
-   > ```php
-   > (new LastModified)
-   >      ->collections(...)
-   >      ->builders(...)
-   >      ->models(...)
-   >      ->manuals(...)
-   >      ->update(bool $force = false);
-   > ```
-   > After:
-   > ```php
-   > LastModified::make()
-   >      ->collections(...)
-   >      ->builders(...)
-   >      ->models(...)
-   >      ->manual(...)
-   >      ->update();
-   > ```
-5. Replace the `new Helldar\LastModified\Services\LastItem` class with `DragonCode\LastModified\Resources\Item::make()`:
-   > Before:
-   > ```php
-   > new LastItem('http://example.com/foo', Carbon::now());
-   > new LastItem('http://example.com/baz?id=1');
-   > ```
-   > After:
-   > ```php
-   > Item::make(['url' => 'http://example.com/foo', 'updated_at' => Carbon::now()])
-   > Item::make(['url' => 'http://example.com/baz?id=1', 'updated_at' => Carbon::now()])
-   > ```
-6. Call the `composer update` console command.
 
 ## Create / Update
 
