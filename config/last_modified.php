@@ -24,33 +24,13 @@ return [
 
     'enabled' => env('LAST_MODIFIED_ENABLED', true),
 
-    // This option sets the settings for working with the database.
+    /*
+     * This option determines the cardinality in a circular query.
+     *
+     * By default, 1000.
+     */
 
-    'database' => [
-        /*
-         * This option specifies the connection to the database.
-         *
-         * Deprecated since 3.0
-         */
-
-        'connection' => env('DB_CONNECTION', 'mysql'),
-
-        /*
-         * This option sets the name of the database table for storing URL hashes.
-         *
-         * Deprecated since 3.0
-         */
-
-        'table' => 'last_modified',
-
-        /*
-         * This option determines the cardinality in a circular query.
-         *
-         * By default, 1000.
-         */
-
-        'chunk' => 1000,
-    ],
+    'chunk' => 1000,
 
     // This option contains settings for working with the cache.
 

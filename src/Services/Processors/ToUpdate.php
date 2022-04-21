@@ -19,17 +19,13 @@ declare(strict_types=1);
 
 namespace DragonCode\LastModified\Services\Processors;
 
+use Carbon\Carbon;
 use DateTimeInterface;
 use Psr\Http\Message\UriInterface;
 
 class ToUpdate extends Processor
 {
-    /**
-     * @param string $hash
-     * @param \Psr\Http\Message\UriInterface $url
-     * @param DateTimeInterface|\Carbon\Carbon $updated_at
-     */
-    protected function handle(string $hash, UriInterface $url, DateTimeInterface $updated_at)
+    protected function handle(string $hash, UriInterface $url, Carbon|DateTimeInterface $updated_at)
     {
         $this->cache($hash)->put($updated_at);
     }

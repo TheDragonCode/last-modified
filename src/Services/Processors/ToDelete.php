@@ -19,12 +19,13 @@ declare(strict_types=1);
 
 namespace DragonCode\LastModified\Services\Processors;
 
+use Carbon\Carbon;
 use DateTimeInterface;
 use Psr\Http\Message\UriInterface;
 
 class ToDelete extends Processor
 {
-    protected function handle(string $hash, UriInterface $url, DateTimeInterface $updated_at)
+    protected function handle(string $hash, UriInterface $url, Carbon|DateTimeInterface $updated_at)
     {
         $this->cache($hash)->forget();
     }

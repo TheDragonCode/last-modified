@@ -35,29 +35,9 @@ class Config
         return ! $this->enabled();
     }
 
-    /**
-     * @deprecated Will be deleted since 3.0 version.
-     *
-     * @return string
-     */
-    public function databaseConnection(): string
+    public function chunk(): int
     {
-        return config('last_modified.database.connection');
-    }
-
-    /**
-     * @deprecated Will be deleted since 3.0 version.
-     *
-     * @return string
-     */
-    public function databaseTable(): string
-    {
-        return config('last_modified.database.table');
-    }
-
-    public function databaseChunk(): int
-    {
-        $value = config('last_modified.database.chunk', 1000);
+        $value = config('last_modified.chunk', 1000);
 
         return $this->getInteger($value, 1000);
     }

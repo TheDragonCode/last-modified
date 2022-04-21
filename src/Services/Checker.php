@@ -35,9 +35,9 @@ class Checker
     use Makeable;
     use Urlable;
 
-    protected $request;
+    protected ?Request $request = null;
 
-    protected $hash;
+    protected ?string $hash = null;
 
     public function __construct(?Request $request = null)
     {
@@ -82,7 +82,7 @@ class Checker
         return null;
     }
 
-    protected function modifiedSince()
+    protected function modifiedSince(): ?DateTimeInterface
     {
         return $this->request->headers->getDate(Header::IF_MODIFIED_SINCE);
     }

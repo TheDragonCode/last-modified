@@ -20,7 +20,7 @@ declare(strict_types=1);
 namespace DragonCode\LastModified\Facades;
 
 use DragonCode\LastModified\Support\Url as Support;
-use DragonCode\Support\Helpers\Http\Builder;
+use DragonCode\Support\Http\Builder;
 use Illuminate\Support\Facades\Facade;
 use Psr\Http\Message\UriInterface;
 

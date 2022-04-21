@@ -23,5 +23,5 @@ use Tests\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {
-    protected $enabled = true;
+    protected bool $enabled = true;
 }
