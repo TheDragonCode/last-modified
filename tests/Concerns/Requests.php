@@ -30,7 +30,7 @@ trait Requests
      * @param string $url
      * @param \Carbon\Carbon|null $date
      *
-     * @return \Illuminate\Foundation\Testing\TestResponse|\Illuminate\Testing\TestResponse
+     * @return \Illuminate\Testing\TestResponse
      */
     protected function request(string $url, ?Carbon $date = null)
     {

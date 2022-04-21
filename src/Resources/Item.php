@@ -19,22 +19,21 @@ declare(strict_types=1);
 
 namespace DragonCode\LastModified\Resources;
 
+use Carbon\Carbon;
 use DragonCode\LastModified\Concerns\Urlable;
 use DragonCode\SimpleDataTransferObject\DataTransferObject;
+use DragonCode\Support\Http\Builder;
 use Psr\Http\Message\UriInterface;
 
 class Item extends DataTransferObject
 {
     use Urlable;
 
-    /** @var string */
-    public $hash;
+    public string $hash;
 
-    /** @var \DragonCode\Support\Helpers\Http\Builder */
-    public $url;
+    public Builder $url;
 
-    /** @var \Carbon\Carbon */
-    public $updated_at;
+    public Carbon $updated_at;
 
     protected function castUrl($value): UriInterface
     {

@@ -19,13 +19,15 @@ declare(strict_types=1);
 
 namespace DragonCode\LastModified\Services\Processors;
 
+use Carbon\Carbon;
 use DateTimeInterface;
 use DragonCode\LastModified\Concerns\Cacheable;
 use DragonCode\LastModified\Concerns\Urlable;
+use DragonCode\LastModified\Constants\Field;
 use DragonCode\LastModified\Facades\Config;
 use DragonCode\LastModified\Resources\Item;
 use DragonCode\Support\Concerns\Makeable;
-use DragonCode\Support\Facades\Helpers\Instance;
+use DragonCode\Support\Facades\Instances\Instance;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
@@ -38,7 +40,7 @@ abstract class Processor
     use Makeable;
     use Urlable;
 
-    abstract protected function handle(string $hash, UriInterface $url, DateTimeInterface $updated_at);
+    abstract protected function handle(string $hash, UriInterface $url, Carbon|DateTimeInterface $updated_at);
 
     public function collections(Collection ...$collections): self
     {
@@ -63,12 +65,7 @@ abstract class Processor
         return $this;
     }
 
-    /**
-     * @param \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder ...$builders
-     *
-     * @return $this
-     */
-    public function builders(...$builders): self
+    public function builders(Builder|EloquentBuilder ...$builders): self
     {
         foreach ($builders as $builder) {
             $builder->chunkById($this->chunk(), function (Collection $collection) {
@@ -82,7 +79,7 @@ abstract class Processor
     public function models(Model ...$models): self
     {
         foreach ($models as $model) {
-            $values = $model->only(['url', 'updated_at']);
+            $values = $model->only([Field::URL, Field::UPDATED_AT]);
 
             $item = Item::make($values);
 
@@ -103,6 +100,6 @@ abstract class Processor
 
     protected function chunk(): int
     {
-        return Config::databaseChunk();
+        return Config::chunk();
     }
 }

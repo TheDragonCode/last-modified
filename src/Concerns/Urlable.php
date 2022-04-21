@@ -20,11 +20,11 @@ declare(strict_types=1);
 namespace DragonCode\LastModified\Concerns;
 
 use DragonCode\LastModified\Facades\Url;
-use DragonCode\Support\Helpers\Http\Builder as BuilderService;
+use DragonCode\Support\Http\Builder;
 
 trait Urlable
 {
-    protected function parseUrl($url): BuilderService
+    protected function parseUrl($url): Builder
     {
         return Url::parse($url);
     }

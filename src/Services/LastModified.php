@@ -21,6 +21,7 @@ namespace DragonCode\LastModified\Services;
 
 use DragonCode\LastModified\Facades\Config;
 use DragonCode\LastModified\Resources\Item;
+use DragonCode\LastModified\Services\Processors\Processor;
 use DragonCode\LastModified\Services\Processors\ToDelete;
 use DragonCode\LastModified\Services\Processors\ToUpdate;
 use DragonCode\Support\Concerns\Makeable;
@@ -32,13 +33,13 @@ class LastModified
 {
     use Makeable;
 
-    protected $collections = [];
+    protected array $collections = [];
 
-    protected $builders = [];
+    protected array $builders = [];
 
-    protected $models = [];
+    protected array $models = [];
 
-    protected $manual = [];
+    protected array $manual = [];
 
     public function collections(Collection ...$collections): self
     {
@@ -71,23 +72,24 @@ class LastModified
     public function update(): void
     {
         if ($this->enabled()) {
-            ToUpdate::make()
-                ->collections(...$this->collections)
-                ->builders(...$this->builders)
-                ->models(...$this->models)
-                ->manual(...$this->manual);
+            $this->process(ToUpdate::make());
         }
     }
 
     public function delete(): void
     {
         if ($this->enabled()) {
-            ToDelete::make()
-                ->collections(...$this->collections)
-                ->builders(...$this->builders)
-                ->models(...$this->models)
-                ->manual(...$this->manual);
+            $this->process(ToDelete::make());
         }
+    }
+
+    protected function process(Processor $processor): void
+    {
+        $processor
+            ->collections(...$this->collections)
+            ->builders(...$this->builders)
+            ->models(...$this->models)
+            ->manual(...$this->manual);
     }
 
     protected function enabled(): bool

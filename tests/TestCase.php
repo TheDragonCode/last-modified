@@ -39,7 +39,7 @@ abstract class TestCase extends BaseTestCase
     use Requests;
     use Urlable;
 
-    protected $enabled = true;
+    protected bool $enabled = true;
 
     protected function setUp(): void
     {
@@ -69,9 +69,7 @@ abstract class TestCase extends BaseTestCase
 
         $router
             ->middleware(CheckLastModified::class)
-            ->get('{slug}', static function (string $slug) {
-                return response()->json($slug);
-            })->name('slug');
+            ->get('{slug}', static fn (string $slug) => response()->json($slug))->name('slug');
     }
 
     protected function setConfig($app): void
@@ -79,7 +77,7 @@ abstract class TestCase extends BaseTestCase
         /** @var \Illuminate\Config\Repository $config */
         $config = $app['config'];
 
-        $config->set('last_modified.database.chunk', 20);
+        $config->set('last_modified.chunk', 20);
 
         $config->set('last_modified.enabled', $this->enabled);
 

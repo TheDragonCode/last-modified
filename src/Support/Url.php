@@ -20,10 +20,10 @@ declare(strict_types=1);
 namespace DragonCode\LastModified\Support;
 
 use DragonCode\LastModified\Facades\Config as ConfigSupport;
-use DragonCode\Support\Facades\Helpers\Ables\Arrayable;
+use DragonCode\Support\Facades\Helpers\Arr;
 use DragonCode\Support\Facades\Helpers\Str;
 use DragonCode\Support\Facades\Http\Builder;
-use DragonCode\Support\Helpers\Http\Builder as HttpBuilder;
+use DragonCode\Support\Http\Builder as HttpBuilder;
 
 class Url
 {
@@ -46,11 +46,9 @@ class Url
     protected function filterQuery(HttpBuilder $uri): array
     {
         if ($keys = $this->getIgnoreKeys()) {
-            return Arrayable::of($uri->getQueryArray())
-                ->filter(static function ($key) use ($keys) {
-                    return ! Str::is($keys, $key);
-                }, ARRAY_FILTER_USE_KEY)
-                ->get();
+            return Arr::of($uri->getQueryArray())
+                ->filter(static fn ($key) => ! Str::is($keys, $key), ARRAY_FILTER_USE_KEY)
+                ->toArray();
         }
 
         return [];

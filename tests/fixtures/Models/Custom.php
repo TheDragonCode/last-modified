@@ -19,18 +19,22 @@ declare(strict_types=1);
 
 namespace Tests\fixtures\Models;
 
-use DragonCode\Support\Facades\Helpers\Ables\Stringable;
+use DragonCode\LastModified\Constants\Field;
+use DragonCode\Support\Facades\Helpers\Str;
 use Illuminate\Database\Eloquent\Model;
 
 class Custom extends Model
 {
     protected $table = 'custom';
 
-    protected $fillable = ['slug', 'updated_at'];
+    protected $fillable = [
+        Field::SLUG,
+        Field::UPDATED_AT,
+    ];
 
     protected function setSlugAttribute(string $slug): void
     {
-        $this->attributes['slug'] = Stringable::of($slug)->trim()->slug();
+        $this->attributes[Field::SLUG] = Str::of($slug)->trim()->slug()->toString();
     }
 
     protected function getUrlAttribute(): string

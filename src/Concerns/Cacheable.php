@@ -9,7 +9,7 @@ use DragonCode\LastModified\Facades\Config;
 
 trait Cacheable
 {
-    protected $cache_tag = 'last_modified';
+    protected string $cache_tag = 'last_modified';
 
     protected function cache(string $key): Cache
     {

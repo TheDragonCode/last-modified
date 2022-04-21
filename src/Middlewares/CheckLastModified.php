@@ -23,10 +23,12 @@ use DragonCode\LastModified\Services\Checker;
 use Fig\Http\Message\RequestMethodInterface;
 use Fig\Http\Message\StatusCodeInterface;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class CheckLastModified
 {
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): Response|JsonResponse
     {
         if ($this->isDisabled() || $this->disallowMethod($request)) {
             return $next($request);
@@ -35,13 +37,13 @@ class CheckLastModified
         $service = $this->service($request);
 
         if ($service->isNotModified()) {
-            return response(null, StatusCodeInterface::STATUS_NOT_MODIFIED);
+            return response()->noContent(StatusCodeInterface::STATUS_NOT_MODIFIED);
         }
 
         return $this->setLastModified($request, $next, $service);
     }
 
-    protected function setLastModified(Request $request, Closure $next, Checker $service)
+    protected function setLastModified(Request $request, Closure $next, Checker $service): Response|JsonResponse
     {
         /** @var \Symfony\Component\HttpFoundation\Response $response */
         $response = $next($request);
@@ -63,9 +65,7 @@ class CheckLastModified
 
     protected function disallowMethod(Request $request): bool
     {
-        $method = $request->getRealMethod();
-
-        return ! in_array($method, $this->requestMethods(), true);
+        return ! in_array($request->getRealMethod(), $this->requestMethods(), true);
     }
 
     protected function requestMethods(): array

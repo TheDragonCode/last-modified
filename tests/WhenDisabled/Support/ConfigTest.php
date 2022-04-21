@@ -34,11 +34,11 @@ class ConfigTest extends TestCase
         $this->assertTrue(Config::disabled());
     }
 
-    public function testDatabaseChunk()
+    public function testChunk()
     {
-        $this->assertIsNumeric(Config::databaseChunk());
+        $this->assertIsNumeric(Config::chunk());
 
-        $this->assertSame(20, Config::databaseChunk());
+        $this->assertSame(20, Config::chunk());
     }
 
     public function testCacheTtl()

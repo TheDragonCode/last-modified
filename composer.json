@@ -24,11 +24,11 @@
         "source": "https://github.com/TheDragonCode/last-modified"
     },
     "require": {
-        "php": "^7.3 || ^8.0",
+        "php": "^8.0",
         "doctrine/dbal": "^2.6 || ^3.0",
-        "dragon-code/laravel-cache": "^2.10",
-        "dragon-code/simple-dto": "^2.1",
-        "dragon-code/support": "^5.6",
+        "dragon-code/laravel-cache": "^3.0",
+        "dragon-code/simple-dto": "^2.3",
+        "dragon-code/support": "^6.0",
         "fig/http-message-util": "^1.1",
         "illuminate/console": "^6.0 || ^7.0 || ^8.0 || ^9.0",
         "illuminate/database": "^6.0 || ^7.0 || ^8.0 || ^9.0",

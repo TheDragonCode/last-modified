@@ -17,6 +17,7 @@
 
 declare(strict_types=1);
 
+use DragonCode\LastModified\Constants\Field;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -28,7 +29,7 @@ class CreateCustomTable extends Migration
         Schema::create('custom', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->string('slug');
+            $table->string(Field::SLUG);
 
             $table->timestamps();
         });
