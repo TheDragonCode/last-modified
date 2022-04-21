@@ -65,7 +65,7 @@ abstract class Processor
         return $this;
     }
 
-    public function builders(Builder|EloquentBuilder...$builders): self
+    public function builders(Builder|EloquentBuilder ...$builders): self
     {
         foreach ($builders as $builder) {
             $builder->chunkById($this->chunk(), function (Collection $collection) {
