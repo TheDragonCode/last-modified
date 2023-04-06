@@ -1,4 +1,4 @@
-## Last Modified Header for Laravel
+## Last Modified for Laravel
 
 <img src="https://preview.dragon-code.pro/TheDragonCode/last-modified.svg?brand=laravel" alt="Laravel Last Modified"/>
 
