@@ -1,4 +1,4 @@
-## Last Modified
+## Last Modified Header for Laravel
 
 <img src="https://preview.dragon-code.pro/TheDragonCode/last-modified.svg?brand=laravel" alt="Laravel Last Modified"/>
 
@@ -190,7 +190,7 @@ class ObserverServiceProvider extends ServiceProvider
 This package is licensed under the [MIT License](LICENSE).
 
 
-[badge_build]:          https://img.shields.io/github/workflow/status/TheDragonCode/last-modified/phpunit?style=flat-square
+[badge_build]:          https://img.shields.io/github/actions/workflow/status/TheDragonCode/last-modified/phpunit.yml?style=flat-square
 
 [badge_downloads]:      https://img.shields.io/packagist/dt/dragon-code/last-modified.svg?style=flat-square
 
