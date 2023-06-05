@@ -33,10 +33,15 @@ use Tests\fixtures\Providers\TestServiceProvider;
 abstract class TestCase extends BaseTestCase
 {
     use Cacheable;
+
     use Fakeable;
+
     use Asserts;
+
     use RefreshDatabase;
+
     use Requests;
+
     use Urlable;
 
     protected bool $enabled = true;
