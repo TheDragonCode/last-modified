@@ -27,9 +27,6 @@ use Lmc\HttpConstants\Header;
 trait Requests
 {
     /**
-     * @param string $url
-     * @param \Carbon\Carbon|null $date
-     *
      * @return \Illuminate\Testing\TestResponse
      */
     protected function request(string $url, ?Carbon $date = null)

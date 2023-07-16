@@ -37,9 +37,7 @@ use Psr\Http\Message\UriInterface;
 abstract class Processor
 {
     use Cacheable;
-
     use Makeable;
-
     use Urlable;
 
     abstract protected function handle(string $hash, UriInterface $url, Carbon|DateTimeInterface $updated_at);

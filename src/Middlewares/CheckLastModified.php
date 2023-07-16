@@ -28,7 +28,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CheckLastModified
 {
-    public function handle(Request $request, Closure $next): Response|JsonResponse
+    public function handle(Request $request, Closure $next): JsonResponse|Response
     {
         if ($this->isDisabled() || $this->disallowMethod($request)) {
             return $next($request);
@@ -43,7 +43,7 @@ class CheckLastModified
         return $this->setLastModified($request, $next, $service);
     }
 
-    protected function setLastModified(Request $request, Closure $next, Checker $service): Response|JsonResponse
+    protected function setLastModified(Request $request, Closure $next, Checker $service): JsonResponse|Response
     {
         /** @var \Symfony\Component\HttpFoundation\Response $response */
         $response = $next($request);

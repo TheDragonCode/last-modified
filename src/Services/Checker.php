@@ -32,9 +32,7 @@ use Lmc\HttpConstants\Header;
 class Checker
 {
     use Cacheable;
-
     use Makeable;
-
     use Urlable;
 
     protected ?Request $request = null;
