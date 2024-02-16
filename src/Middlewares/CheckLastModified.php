@@ -45,7 +45,7 @@ class CheckLastModified
 
     protected function setLastModified(Request $request, Closure $next, Checker $service): JsonResponse|Response
     {
-        /** @var \Symfony\Component\HttpFoundation\Response $response */
+        /** @var Response $response */
         $response = $next($request);
 
         $date = $service->getDate();
