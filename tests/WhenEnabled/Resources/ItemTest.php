@@ -54,7 +54,7 @@ class ItemTest extends TestCase
     public function testWrongUrl()
     {
         $this->expectException(NotValidUrlException::class);
-        $this->expectDeprecationMessage('The "foo" is not a valid URL.');
+        $this->expectExceptionMessage('The "foo" is not a valid URL.');
 
         Item::make(['url' => 'foo']);
     }
