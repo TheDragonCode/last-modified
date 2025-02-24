@@ -8,7 +8,7 @@
   ~
   ~ @author Andrey Helldar <helldar@ai-rus.com>
   ~
-  ~ @copyright 2024 Andrey Helldar
+  ~ @copyright 2025 Andrey Helldar
   ~
   ~ @license MIT
   ~
@@ -30,16 +30,6 @@
         stopOnFailure="false"
         verbose="true"
 >
-    <coverage processUncoveredFiles="true">
-        <include>
-            <directory suffix=".php">./src</directory>
-        </include>
-        <report>
-            <clover outputFile="build/logs/clover.xml"/>
-            <html outputDirectory="build/logs/coverage"/>
-            <text outputFile="build/logs/coverage.txt"/>
-        </report>
-    </coverage>
     <php>
         <env name="APP_KEY" value="AckfSECXIvnK5r28GVIWUAxmbBSjTsmF"/>
         <env name="APP_URL" value="http://localhost"/>

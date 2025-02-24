@@ -8,7 +8,7 @@
  *
  * @author Andrey Helldar <helldar@ai-rus.com>
  *
- * @copyright 2024 Andrey Helldar
+ * @copyright 2025 Andrey Helldar
  *
  * @license MIT
  *
