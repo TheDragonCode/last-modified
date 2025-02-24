@@ -36,7 +36,6 @@
     ],
     "require": {
         "php": "^8.0",
-        "doctrine/dbal": "^2.6 || ^3.0",
         "dragon-code/laravel-cache": "^3.3 || ^4.0",
         "dragon-code/simple-dto": "^2.3",
         "dragon-code/support": "^6.0",
@@ -56,6 +55,9 @@
     },
     "conflict": {
         "andrey-helldar/last-modified": "*"
+    },
+    "suggest": {
+        "doctrine/dbal": "It is necessary to install when working with Laravel from 6 to 10"
     },
     "minimum-stability": "stable",
     "prefer-stable": true,
