@@ -36,14 +36,13 @@
     ],
     "require": {
         "php": "^8.0",
-        "doctrine/dbal": "^2.6 || ^3.0",
-        "dragon-code/laravel-cache": "^3.3",
+        "dragon-code/laravel-cache": "^3.3 || ^4.0",
         "dragon-code/simple-dto": "^2.3",
         "dragon-code/support": "^6.0",
         "fig/http-message-util": "^1.1",
-        "illuminate/console": ">=6.0 <12.0",
-        "illuminate/database": ">=6.0 <12.0",
-        "illuminate/support": ">=6.0 <12.0",
+        "illuminate/console": ">=6.0 <13.0",
+        "illuminate/database": ">=6.0 <13.0",
+        "illuminate/support": ">=6.0 <13.0",
         "lmc/http-constants": "^1.2",
         "nesbot/carbon": "^1.20 || ^2.0 || ^3.0",
         "psr/http-message": "^1.0.1 || ^2.0"
@@ -51,11 +50,14 @@
     "require-dev": {
         "ext-json": "*",
         "mockery/mockery": "^1.3.1",
-        "orchestra/testbench": ">=4.0 <10.0",
-        "phpunit/phpunit": "^9.6 || ^10.0"
+        "orchestra/testbench": ">=4.0 <11.0",
+        "phpunit/phpunit": "^9.6 || ^10.0 || ^11.0 || ^12.0"
     },
     "conflict": {
         "andrey-helldar/last-modified": "*"
+    },
+    "suggest": {
+        "doctrine/dbal": "It is necessary to install when working with Laravel from 6 to 10"
     },
     "minimum-stability": "stable",
     "prefer-stable": true,
