@@ -1,3 +1,10 @@
+# Last Modified
+
+<picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://banners.beyondco.de/Last%20Modified.png?theme=dark&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=composer+require&packageName=dragon-code%2Flast-modified&description=Setting+the+response+code+304+Not+Modified+in+the+absence+of+content+changes.&md=1&showWatermark=1">
+    <img src="https://banners.beyondco.de/Last%20Modified.png?theme=light&pattern=topography&style=style_2&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg&packageManager=composer+require&packageName=dragon-code%2Flast-modified&description=Setting+the+response+code+304+Not+Modified+in+the+absence+of+content+changes.&md=1&showWatermark=1" alt="Last Modified">
+</picture>
+
 ## Last Modified for Laravel
 
 ![last modified](https://banners.beyondco.de/Last%20Modified.png?theme=light&packageManager=composer+require&packageName=dragon-code%2Flast-modified&pattern=topography&style=style_2&description=by+The+Dragon+Code&md=1&showWatermark=1&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg)
